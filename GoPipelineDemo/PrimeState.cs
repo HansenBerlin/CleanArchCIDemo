@@ -2,6 +2,8 @@
 {
     public enum PrimeState
     {
-        
+        IsPrime,
+        IsNoPrime,
+        Invalid
     }
 }

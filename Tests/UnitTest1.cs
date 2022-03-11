@@ -13,4 +13,16 @@ public class UnitTest1
         
         Assert.Equal(3, result);
     }
+    
+    [Theory]
+    [InlineData(3)]
+    [InlineData(13)]
+    [InlineData(305175781)]
+    public void CheckPrime_ShouldReturnOnlyIsPrime_WhenValidPrimeNumberIsPassed(long checkNumber)
+    {
+        var sut = new Calculator();
+        var result = sut.CheckPrime(checkNumber);
+        
+        Assert.Equal(PrimeState.IsPrime, result);
+    }
 }
