@@ -23,6 +23,6 @@ public class UnitTest1
         var sut = new Calculator();
         var result = sut.CheckPrime(checkNumber);
         
-        Assert.Equal(PrimeState.IsPrime, result);
+        Assert.Equal(PrimeState.IsPrime, result.Result);
     }
 }

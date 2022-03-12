@@ -6,19 +6,19 @@ namespace GoPipelineDemo
     public class Calculator
     {
         private static readonly HttpClient Client = new();
-        private const string RequestUrl = "https://127.0.0.1:8080/PrimeNumberChecker/";
+        private const string RequestUrl = "http://127.0.0.1:8080/PrimeNumberChecker/";
 
         public int Add(int a, int b)
         {
             return a + b;
         }
 
-        public PrimeState CheckPrime(long checkNumber)
+        public async Task<PrimeState> CheckPrime(long checkNumber)
         {
-            return GetProductAsync(RequestUrl + checkNumber).Result;
+            return await GetPrimeState(RequestUrl + checkNumber);
         }
         
-        private async Task<PrimeState> GetProductAsync(string path)
+        private async Task<PrimeState> GetPrimeState(string path)
         {
             PrimeState result = PrimeState.Invalid;
             HttpResponseMessage response = await Client.GetAsync(path);
