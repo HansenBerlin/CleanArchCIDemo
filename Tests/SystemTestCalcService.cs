@@ -27,7 +27,7 @@ public class SystemTestCalcService
     }
     
     [Theory]
-    [InlineData(2)]
+    [InlineData(4)]
     [InlineData(100)]
     [InlineData(300000000)]
     public void CheckPrime_ShouldReturnOnlyIsNoPrime_WhenValidNonPrimeNumberIsPassed(long checkNumber)
