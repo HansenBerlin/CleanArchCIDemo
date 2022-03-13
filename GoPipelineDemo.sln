@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTests", "SystemTests\SystemTests.csproj", "{2638BFEF-4EE9-4A40-BDB1-9B591892A50B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorWebClient", "..\calcwebclient\CalculatorWebClient\CalculatorWebClient\CalculatorWebClient.csproj", "{0B3DBFFD-B25A-4052-8682-E8C6E68A2016}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{2638BFEF-4EE9-4A40-BDB1-9B591892A50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2638BFEF-4EE9-4A40-BDB1-9B591892A50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2638BFEF-4EE9-4A40-BDB1-9B591892A50B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B3DBFFD-B25A-4052-8682-E8C6E68A2016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B3DBFFD-B25A-4052-8682-E8C6E68A2016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B3DBFFD-B25A-4052-8682-E8C6E68A2016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B3DBFFD-B25A-4052-8682-E8C6E68A2016}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
