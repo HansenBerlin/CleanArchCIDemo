@@ -3,7 +3,7 @@ using Xunit;
 
 namespace Tests;
 
-public class UnitTest1
+public class SystemTestCalcService
 {
     [Fact]
     public void Add_ShouldAddBothNumbers_NoCondition()
