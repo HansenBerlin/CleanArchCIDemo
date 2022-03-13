@@ -2,7 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoPipelineDemo", "GoPipelineDemo\GoPipelineDemo.csproj", "{3E45E569-274A-483A-A1F0-03294F9EF47F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{3527B395-9C53-4AAB-AC92-9369431C9115}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{3527B395-9C53-4AAB-AC92-9369431C9115}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SystemTests", "SystemTests\SystemTests.csproj", "{2638BFEF-4EE9-4A40-BDB1-9B591892A50B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +20,9 @@ Global
 		{3527B395-9C53-4AAB-AC92-9369431C9115}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3527B395-9C53-4AAB-AC92-9369431C9115}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3527B395-9C53-4AAB-AC92-9369431C9115}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2638BFEF-4EE9-4A40-BDB1-9B591892A50B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2638BFEF-4EE9-4A40-BDB1-9B591892A50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2638BFEF-4EE9-4A40-BDB1-9B591892A50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2638BFEF-4EE9-4A40-BDB1-9B591892A50B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
