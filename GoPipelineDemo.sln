@@ -10,6 +10,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorWebClient", "..\c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorWebClient.UiTests", "CalculatorWebClient.UiTests\CalculatorWebClient.UiTests.csproj", "{4AD6F161-9438-4ED2-859B-5A7522563C17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentCore", "PaymentCore\PaymentCore.csproj", "{DC47A03C-C199-4E4A-94E8-178CE64FCC78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentApplication", "PaymentApplication\PaymentApplication.csproj", "{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {DC47A03C-C199-4E4A-94E8-178CE64FCC78}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +43,13 @@ Global
 		{4AD6F161-9438-4ED2-859B-5A7522563C17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4AD6F161-9438-4ED2-859B-5A7522563C17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4AD6F161-9438-4ED2-859B-5A7522563C17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC47A03C-C199-4E4A-94E8-178CE64FCC78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC47A03C-C199-4E4A-94E8-178CE64FCC78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC47A03C-C199-4E4A-94E8-178CE64FCC78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC47A03C-C199-4E4A-94E8-178CE64FCC78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
