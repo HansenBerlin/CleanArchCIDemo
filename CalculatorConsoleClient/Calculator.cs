@@ -1,7 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace GoPipelineDemo
+namespace CalculatorConsoleClient
 {
     public class Calculator
     {

@@ -1,4 +1,4 @@
-﻿namespace GoPipelineDemo
+﻿namespace CalculatorConsoleClient
 {
     public enum PrimeState
     {

@@ -1,7 +1,6 @@
-using GoPipelineDemo;
 using Xunit;
 
-namespace UnitTests;
+namespace CalculatorConsoleClient.UnitTests;
 
 public class SystemTestCalcService
 {

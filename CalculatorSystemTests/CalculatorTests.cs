@@ -1,7 +1,7 @@
-using GoPipelineDemo;
+using CalculatorConsoleClient;
 using Xunit;
 
-namespace SystemTests;
+namespace CalculatorSystemTests;
 
 public class CalculatorTests
 {

@@ -4,7 +4,7 @@ using CalculatorWebClient;
 using CalculatorWebClient.Pages;
 using Xunit;
 
-namespace UiTests;
+namespace CalculatorWebClient.UiTests;
 
 public class CalculatorTest
 {

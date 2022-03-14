@@ -5,6 +5,8 @@
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
+
+        <PackageId>CalculatorConsoleClient.UnitTests</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
@@ -18,10 +20,11 @@
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
+        <PackageReference Include="XunitXml.TestLogger" Version="3.0.70" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\GoPipelineDemo\GoPipelineDemo.csproj" />
+      <ProjectReference Include="..\CalculatorConsoleClient\CalculatorConsoleClient.csproj" />
     </ItemGroup>
 
 </Project>
