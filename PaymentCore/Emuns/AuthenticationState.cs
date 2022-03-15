@@ -8,5 +8,6 @@ public enum AuthenticationState
     InsecurePassword,
     UserNotFound,
     UserAlreadyExists,
-    Unregistered
+    Unregistered,
+    Registered
 }

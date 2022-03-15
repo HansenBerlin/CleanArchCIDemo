@@ -2,7 +2,8 @@
 using Newtonsoft.Json;
 using PaymentCore.Emuns;
 using PaymentCore.Entities;
-using PaymentCore.Services;
+using PaymentCore.Interfaces;
+using PaymentCore.UseCases;
 
 namespace PaymentApplication.Controller;
 
@@ -15,7 +16,7 @@ public class PaymentExecuterController : HttpRequestController, IPaymentExecuter
         PaymentState result = PaymentState.Pending;
         HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(paymentData), Encoding.UTF8);
         httpContent.Headers.ContentType = new("application/json");
-        HttpResponseMessage response = await _client.PostAsync($"{_requestBaseUrl}/{url}", httpContent);
+        HttpResponseMessage response = await Client.PostAsync($"{RequestBaseUrl}/{url}", httpContent);
         if (response.IsSuccessStatusCode)
         {
             string responseMessage = await response.Content.ReadAsStringAsync();

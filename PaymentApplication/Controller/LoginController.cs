@@ -2,35 +2,56 @@
 using System.Security.Cryptography;
 using System.Text;
 using Newtonsoft.Json;
-using PaymentApplication.Models;
+using PaymentApplication.ValueObjects;
 using PaymentCore.Emuns;
 using PaymentCore.Entities;
-using PaymentCore.Services;
+using PaymentCore.Interfaces;
+using PaymentCore.UseCases;
 
 namespace PaymentApplication.Controller;
 
-public class LoginController : HttpRequestController, IAuthenticator
+public class LoginController : HttpRequestController, IAuthenticateUseCase
 {
     public LoginController(HttpClient client, string requestBaseUrl) : base(client, requestBaseUrl) { }
+
+    public async Task<IUser> Authenticate(IUser user)
+    {
+        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.UserAuthenticate}/{user.Name}/{user.PasswordHash}");
+        if (response.IsSuccessStatusCode)
+        {
+            //string responseMessage = await response.Content.ReadAsStringAsync();
+            //user = JsonConvert.DeserializeObject<IUser>(responseMessage);
+            
+            user = await response.Content.ReadAsAsync<UserEntity>();
+        }
+        return user;
+    }
+
     
     public async Task<IUser> Login(string url, string username, SecureString password)
     {
-        IUser user = new UserModel
+        IUser user = new UserEntity()
         {
            AuthState = AuthenticationState.LoggedOut
         };
-        HttpResponseMessage response = await _client.GetAsync($"{_requestBaseUrl}/{url}");
+        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{url}/{username}");
         if (response.IsSuccessStatusCode)
         {
-            user = await response.Content.ReadAsAsync<IUser>();
-            user.AuthState = AuthenticationState.LoggedIn;
+            //string responseMessage = await response.Content.ReadAsStringAsync();
+            //user = JsonConvert.DeserializeObject<IUser>(responseMessage);
+            
+            user = await response.Content.ReadAsAsync<UserEntity>();
+            if (user.Id != 0)
+            {
+                user.AuthState = AuthenticationState.LoggedIn;
+            }
         }
         return user;
     }
 
     public async Task<IUser> Register(string url, string username, SecureString password)
     {
-        IUser user = new UserModel
+        IUser user = new UserEntity
         {
             AuthState = AuthenticationState.Unregistered,
             Name = username,
@@ -38,7 +59,7 @@ public class LoginController : HttpRequestController, IAuthenticator
         };
         HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(user), Encoding.UTF8);
         httpContent.Headers.ContentType = new("application/json");
-        HttpResponseMessage response = await _client.PostAsync($"{_requestBaseUrl}/{url}", httpContent);
+        HttpResponseMessage response = await Client.PostAsync($"{RequestBaseUrl}/{url}", httpContent);
         if (response.IsSuccessStatusCode)
         {
             string responseMessage = await response.Content.ReadAsStringAsync();
@@ -48,9 +69,9 @@ public class LoginController : HttpRequestController, IAuthenticator
         return user;
     }
 
-    public async Task<AuthenticationState> Logout(string url, string username)
+    public async Task<AuthenticationState> Logout(string url, int userId)
     {
-        HttpResponseMessage response = await _client.GetAsync($"{_requestBaseUrl}/{url}/{username}");
+        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{url}/{userId}");
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadAsAsync<AuthenticationState>();

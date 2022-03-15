@@ -2,12 +2,12 @@
 
 public class HttpRequestController
 {
-    protected readonly HttpClient _client;
-    protected readonly string _requestBaseUrl;
+    protected readonly HttpClient Client;
+    protected readonly string RequestBaseUrl;
 
-    public HttpRequestController(HttpClient client, string requestBaseUrl)
+    protected HttpRequestController(HttpClient client, string requestBaseUrl)
     {
-        _client = client;
-        _requestBaseUrl = requestBaseUrl;
+        Client = client;
+        RequestBaseUrl = requestBaseUrl;
     }
 }

@@ -7,15 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="MySql.Data" Version="8.0.28" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Behaviours" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\PaymentCore\PaymentCore.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Models" />
     </ItemGroup>
 
 </Project>
