@@ -1,6 +1,4 @@
-using System.Diagnostics.Metrics;
 using Bunit;
-using PaymentWebClient;
 using PaymentWebClient.Pages;
 using Xunit;
 

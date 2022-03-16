@@ -1,4 +1,3 @@
-using PaymentConsoleClient;
 using Xunit;
 
 namespace PaymentConsoleClient.UnitTests;
