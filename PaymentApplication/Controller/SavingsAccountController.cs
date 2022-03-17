@@ -2,14 +2,26 @@
 using Newtonsoft.Json;
 using PaymentApplication.ValueObjects;
 using PaymentCore.Emuns;
+using PaymentCore.Entities;
 using PaymentCore.Interfaces;
 using PaymentCore.UseCases;
 
 namespace PaymentApplication.Controller;
 
-public class SavingsAccountController : HttpRequestController, IMakePaymentsUseCase
+public class SavingsAccountController : HttpRequestController, ISavingsAccountInteractor
 {
     public SavingsAccountController(HttpClient client, string requestBaseUrl) : base(client, requestBaseUrl) { }
+
+    public async Task<IUserSavingsAccount> AddAccount(string username)
+    {
+        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.AddNewSavingsAccount}/{username}/0");
+        if (response.IsSuccessStatusCode)
+        {
+            return await response.Content.ReadAsAsync<SavingsAccountEntity>();
+        }
+
+        return new SavingsAccountEntity();
+    }
 
     public async Task <PaymentState> MakePayment(IPayment paymentData)
     {

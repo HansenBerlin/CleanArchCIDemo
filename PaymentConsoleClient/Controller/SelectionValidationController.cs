@@ -22,25 +22,15 @@ public class SelectionValidationController : ISelectionValidation
         var allValues = Enum.GetValues(typeof(MainMenuSelection))
             .Cast<MainMenuSelection>()
             .ToList();
-        var account = _user.UserSavingsAccount;
         switch (_user.AuthState)
         {
             case AuthenticationState.LoggedIn:
-                if (account.Id != 0)
-                    allValues.RemoveRange(1, 3);
-                else
-                {
-                    allValues.RemoveRange(1, 2);
-                    allValues.RemoveAt(2);
-                }
+                allValues.RemoveRange(1, 2);
                 break;
             case AuthenticationState.LoggedOut:
-                allValues.RemoveRange(3, 4);
-                break;
-            default:
+                allValues.RemoveRange(3, 3);
                 break;
         }
-
         return allValues;
     }
 
@@ -49,20 +39,6 @@ public class SelectionValidationController : ISelectionValidation
         var allValues = Enum.GetValues(typeof(SavingsAccountSelection))
             .Cast<SavingsAccountSelection>()
             .ToList();
-        var account = _user.UserSavingsAccount;
-
-        switch (_user.AuthState)
-        {
-            case AuthenticationState.LoggedIn:
-                allValues.RemoveRange(1, 2);
-                break;
-            case AuthenticationState.LoggedOut:
-                allValues.RemoveRange(3, 4);
-                break;
-            default:
-                break;
-        }
-
         return allValues;
     }
     

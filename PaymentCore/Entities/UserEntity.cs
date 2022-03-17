@@ -16,7 +16,7 @@ public class UserEntity : IUser
     
     public UserEntity()
     {
-        UserSavingsAccount = new SavingsAccountEntity();
+        //UserSavingsAccount = new SavingsAccountEntity();
         _deepCopy = new UserDeepCopy();
     }
 

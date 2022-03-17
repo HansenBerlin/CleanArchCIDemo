@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using PaymentApplication.Common;
 using PaymentApplication.Events;
 using PaymentCore.Emuns;
 using PaymentCore.Interfaces;
@@ -7,20 +8,18 @@ using PaymentCore.UseCases;
 
 namespace PaymentConsoleClient.Controller;
 
-public class UserAuthenticationController : IUserAuthentication
+public class UserAuthenticationController : IUserAuthenticationController
 {
-    private readonly IAuthenticateUseCase _authentication;
-    private readonly IUserAccountInteractor _registration;
+    private readonly IUserAccountInteractor _interactor;
     private readonly IUser _user;
     
-    public UserAuthenticationController(IAuthenticateUseCase authentication, IUserAccountInteractor registration, IUser user)
+    public UserAuthenticationController(IUserAccountInteractor interactor, IUser user)
     {
-        _authentication = authentication;
-        _registration = registration;
+        _interactor = interactor;
         _user = user;
     }
     
-    public async Task<string> CheckForUnusedUsername()
+    public async Task<string> ValidateUsernameInput()
     {
         Console.WriteLine("Neuen Nutzer registrieren. \nx zum Abbrechen oder \nName eingeben: ");
         while (true)
@@ -30,7 +29,7 @@ public class UserAuthenticationController : IUserAuthentication
             {
                 return string.Empty;
             }
-            var userNameAvailable = await _registration.IsNameAvailable(username);
+            var userNameAvailable = await _interactor.IsNameAvailable(username);
             if (userNameAvailable)
             {
                 return username;
@@ -38,14 +37,26 @@ public class UserAuthenticationController : IUserAuthentication
             Console.WriteLine("Nutzername bereits vergeben. Bitte einen anderen auswählen.");
         }
     }
-    
-    public async Task<bool> CheckIfUsernameIsRegistered(string username)
+
+    public async Task<string> ValidateLoginInput()
     {
-        var userNameAvailable = await _registration.IsNameAvailable(username);
-        return !userNameAvailable;
+        Console.WriteLine("LOGIN. \nx zum Abbrechen oder \nNutzername und Passwort eingeben: ");
+        while (true)
+        {
+            string? username = Console.ReadLine();
+            string? pw = Console.ReadLine();
+            if (username == "x" || pw == "x")
+            {
+                return "Abbruch";
+            }
+
+            IUser user = await _interactor.Authenticate(username, pw);
+            _user.CopyProperties(user);
+            return "SUCCESS";
+        }
     }
 
-    public async Task<bool> IsNewUserRegisteredWithPasswordCheck(string username)
+    public async Task<bool> ValidateUserRegistrationInput(string username)
     {
         while (true)
         {
@@ -56,7 +67,7 @@ public class UserAuthenticationController : IUserAuthentication
                 return false;
             }
             
-            var user = await _registration.Register(pw, username);
+            var user = await _interactor.Register(pw, username);
             Console.WriteLine(user.AuthState);
 
             if (user.AuthState == AuthenticationState.InsecurePassword)

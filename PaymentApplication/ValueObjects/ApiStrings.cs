@@ -7,5 +7,6 @@ public static class ApiStrings
     public static string UserRegister = "Authentication/register";
     public static string NameCheck = "Authentication/users";
     public static string MakePayment = "Payments";
+    public static string AddNewSavingsAccount = "SavingsAccount/new";
 
 }

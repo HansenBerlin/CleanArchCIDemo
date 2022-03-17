@@ -10,16 +10,23 @@ namespace PaymentApplication.Controller;
 
 public class LoginController : HttpRequestController, IUserAccountInteractor
 {
-    public LoginController(HttpClient client, string requestBaseUrl) : base(client, requestBaseUrl) { }
+    private readonly ISecurityPolicyInteractor _pwCheck;
 
-    public async Task<IUser> Authenticate(IUser user)
+    public LoginController(HttpClient client, string requestBaseUrl, ISecurityPolicyInteractor pwCheck) : base(client, requestBaseUrl)
     {
-        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.UserAuthenticate}/{user.Name}/{user.PasswordHash}");
+        _pwCheck = pwCheck;
+    }
+
+    public async Task<IUser> Authenticate(string username, string password)
+    {
+        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.UserAuthenticate}/{username}/{password}");
         if (response.IsSuccessStatusCode)
         {
-            user = await response.Content.ReadAsAsync<UserEntity>();
+            return await response.Content.ReadAsAsync<UserEntity>();
         }
-        return user;
+
+        var state = await response.Content.ReadAsAsync<AuthenticationState>();
+        return new UserEntity { AuthState = state };
     }
 
     public async Task<IUser> Register(string password, string username)
@@ -62,7 +69,6 @@ public class LoginController : HttpRequestController, IUserAccountInteractor
             string result = await response.Content.ReadAsStringAsync();
             isNameInUse = bool.Parse(result);
         }
-        Console.WriteLine(!isNameInUse);
         return !isNameInUse;
     }
 

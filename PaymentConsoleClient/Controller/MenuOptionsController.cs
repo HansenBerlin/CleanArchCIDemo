@@ -25,6 +25,18 @@ public class MenuOptionsController : IMenuOptions
             return (MainMenuSelection)input;
         }
     }
+    
+    public SavingsAccountSelection SelectFromSavingsAccountMenu()
+    {
+        var options = _selectionValidation.LimitOptionsSavingsAccountMenu().ToArray();
+        Console.WriteLine($"Available Options: \n{SplitOptions(options)}");
+        while (true)
+        {
+            int[] allowed = Array.ConvertAll(options, value => (int) value);
+            int input = _selectionValidation.RestrictInputToInt(allowed);
+            return (SavingsAccountSelection)input;
+        }
+    }
 
     public MainMenuSelection SelectFromRegistrationMenu()
     {
@@ -37,6 +49,12 @@ public class MenuOptionsController : IMenuOptions
     }
 
     private string SplitOptions(MainMenuSelection[] options)
+    {
+        return options.Aggregate("", (current, o) 
+            => current + $"{(int) o}: {o} \n");
+    }
+    
+    private string SplitOptions(SavingsAccountSelection[] options)
     {
         return options.Aggregate("", (current, o) 
             => current + $"{(int) o}: {o} \n");

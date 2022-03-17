@@ -10,5 +10,6 @@ public interface IUserAccountInteractor
     Task<bool> UnRegister(string username);
     Task<bool> IsNameAvailable(string username);
     Task<AuthenticationState> Logout(string url, int userId);
-    Task<IUser> Authenticate(IUser user);
+    Task<IUser> Authenticate(string username, string password);
+
 }

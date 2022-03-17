@@ -2,7 +2,7 @@
 
 public enum SavingsAccountSelection
 {
-    Cancel,
+    Back,
     Deposit,
     Send
 }

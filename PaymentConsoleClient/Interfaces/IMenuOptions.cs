@@ -7,4 +7,6 @@ public interface IMenuOptions
     MainMenuSelection SelectFromMainMenu();
     MainMenuSelection SelectFromRegistrationMenu();
     MainMenuSelection SelectFromLoginMenu();
+    SavingsAccountSelection SelectFromSavingsAccountMenu();
+
 }
