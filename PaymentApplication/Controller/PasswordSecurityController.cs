@@ -16,10 +16,5 @@ public class PasswordSecurityController : ICheckPasswordSecurityUseCase
         return passwordChecker.IsPasswordSecure(password);
     }
     
-    public string GeneratePasswordHash(string plainPassword)
-    {
-        byte[] data = Encoding.UTF8.GetBytes(plainPassword);
-        using SHA512 sham = new SHA512Managed();
-        return Convert.ToBase64String(sham.ComputeHash(data));
-    }
+    
 }

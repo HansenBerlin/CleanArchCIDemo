@@ -2,8 +2,8 @@
 
 public enum AuthenticationState
 {
-    LoggedIn,
     LoggedOut,
+    LoggedIn,
     WrongPassword,
     InsecurePassword,
     UserNotFound,

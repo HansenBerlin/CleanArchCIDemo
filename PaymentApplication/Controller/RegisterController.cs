@@ -1,4 +1,5 @@
-﻿using System.Security;
+﻿using System.Net;
+using System.Security;
 using System.Text;
 using Newtonsoft.Json;
 using PaymentApplication.ValueObjects;
@@ -43,26 +44,27 @@ public class RegisterController : HttpRequestController, IRegisterAccountUseCase
     
     
     
-    public async Task<IUser> Register(string username, string password)
+    public async Task<IUser> Register(string password, string username)
     {
-        IUser user = new UserEntity {AuthState = AuthenticationState.Unregistered, Name = username };
+        IUser user = new UserEntity { AuthState = AuthenticationState.Unregistered, Name = username };
         bool isPasswordSecure = _pwCheck.IsPasswordCompliantToSecurityRules(password, new PasswordSecurityRules());
         if (isPasswordSecure)
         {
-            user.PasswordHash = _pwCheck.GeneratePasswordHash(password);
-        }
-        else
-        {
-            user.AuthState = AuthenticationState.InsecurePassword;
+            string uri = $"{RequestBaseUrl}/{ApiStrings.UserRegister}/{user.Name}/{password}";
+            HttpResponseMessage response = await Client.GetAsync(new Uri(uri));
+            if (response.IsSuccessStatusCode)
+            {
+                user = await response.Content.ReadAsAsync<UserEntity>();
+            }
+            else if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                user.AuthState = await response.Content.ReadAsAsync<AuthenticationState>();
+            }
+            
             return user;
         }
 
-        string uri = $"{RequestBaseUrl}/{ApiStrings.UserRegister}/{user.Name}/{user.PasswordHash}";
-        HttpResponseMessage response = await Client.GetAsync(uri);
-        if (response.IsSuccessStatusCode)
-        {
-            user = await response.Content.ReadAsAsync<UserEntity>();
-        }
+        user.AuthState = AuthenticationState.InsecurePassword;
         return user;
     }
     

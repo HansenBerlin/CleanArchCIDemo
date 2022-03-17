@@ -1,9 +1,11 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using PaymentApplication.Controller;
+using PaymentApplication.Events;
 using PaymentApplication.ValueObjects;
-using PaymentCore.Emuns;
+using PaymentConsoleClient.Controller;
+using PaymentConsoleClient.Enums;
+using PaymentConsoleClient.Interfaces;
 using PaymentCore.Entities;
 using PaymentCore.Interfaces;
 using PaymentCore.UseCases;
@@ -16,48 +18,27 @@ public static class Program
     {
         var client = new HttpClient();
         IAuthenticateUseCase auth = new LoginController(client, ApiStrings.BaseUrl);
-
         ICheckPasswordSecurityUseCase pwCheck = new PasswordSecurityController();
         IRegisterAccountUseCase reg = new RegisterController(client, ApiStrings.BaseUrl, pwCheck);
 
         IUser user = new UserEntity();
+        IUserIsAuthenticating userAuth = new UserAuthenticationController(auth, reg, user);
+
+        ISelectionValidation selectionValidationController = new SelectionValidationController(user);
+        IMenuOptions menuOptions = new MenuOptionsController(selectionValidationController);
         
-        Console.WriteLine("Neuen Nutzer registrieren. Name eingeben: ");
-        while (true)
+        var selection = menuOptions.SelectFromMainMenu();
+
+        if (selection == MainMenuSelection.Register)
         {
-            string? username = Console.ReadLine();
-            var userNameAvailable = await reg.IsNameAvailable(username);
-            if (userNameAvailable)
+            string userName = await userAuth.CheckForUnusedUsername();
+            if (string.IsNullOrEmpty(userName) == false)
             {
-                bool pwsecure = false;
-                while (pwsecure == false)
-                {
-                    Console.WriteLine("Sicheres Passwort auswählen. Eingeben: ");
-                    string pw = Console.ReadLine();
-                    
-                    user = await reg.Register(username, pw);
-
-                    if (user.AuthState == AuthenticationState.InsecurePassword)
-                    {
-                        Console.WriteLine("Passwort unsicher");
-                    }
-                    else if (user.AuthState == AuthenticationState.LoggedIn)
-                    {
-                        Console.WriteLine("SUCCESS");
-                        pwsecure = true;
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Something went wrong. Authentication State: {user.AuthState}");
-                    }
-                }
-                break;
+                user.Name = userName;
+                await userAuth.IsNewUserRegisteredWithPasswordCheck(userName);
             }
-
-            Console.WriteLine("Nutzername bereits vergeben. Bitte einen anderen auswählen.");
         }
-        
-        Console.WriteLine($"{user.Name} created in database");
-        Console.ReadKey();
+
+        menuOptions.SelectFromMainMenu();
     }
 }

@@ -9,4 +9,5 @@ public interface IUser
     IUserSavingsAccount UserSavingsAccount { get; set; }
     AuthenticationState AuthState { get; set; }
     string PasswordHash { get; set; }
+    void CopyProperties(IUser copyFrom);
 }

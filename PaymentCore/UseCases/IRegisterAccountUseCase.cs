@@ -5,7 +5,7 @@ namespace PaymentCore.UseCases;
 
 public interface IRegisterAccountUseCase
 {
-    Task<IUser> Register(string username, string password);
+    Task<IUser> Register(string password, string username);
     Task<bool> UnRegister(string username);
     Task<bool> IsNameAvailable(string username);
 }
