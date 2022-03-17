@@ -7,9 +7,9 @@ using PaymentCore.UseCases;
 
 namespace PaymentApplication.Controller;
 
-public class MakePaymentsUseCaseController : HttpRequestController, IMakePaymentsUseCase
+public class SavingsAccountController : HttpRequestController, IMakePaymentsUseCase
 {
-    public MakePaymentsUseCaseController(HttpClient client, string requestBaseUrl) : base(client, requestBaseUrl) { }
+    public SavingsAccountController(HttpClient client, string requestBaseUrl) : base(client, requestBaseUrl) { }
 
     public async Task <PaymentState> MakePayment(IPayment paymentData)
     {

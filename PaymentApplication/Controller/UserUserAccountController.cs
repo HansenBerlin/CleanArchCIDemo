@@ -11,11 +11,11 @@ using PaymentCore.UseCases;
 
 namespace PaymentApplication.Controller;
 
-public class RegisterController : HttpRequestController, IRegisterAccountUseCase
+public class UserUserAccountController : HttpRequestController, IUserAccountInteractor
 {
-    private readonly ICheckPasswordSecurityUseCase _pwCheck;
+    private readonly ISecurityPolicyInteractor _pwCheck;
         
-    public RegisterController(HttpClient client, string requestBaseUrl, ICheckPasswordSecurityUseCase pwCheck) : base(client, requestBaseUrl)
+    public UserUserAccountController(HttpClient client, string requestBaseUrl, ISecurityPolicyInteractor pwCheck) : base(client, requestBaseUrl)
     {
         _pwCheck = pwCheck;
     }

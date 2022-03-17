@@ -7,13 +7,13 @@ using PaymentCore.UseCases;
 
 namespace PaymentConsoleClient.Controller;
 
-public class UserAuthenticationController : IUserIsAuthenticating
+public class UserAuthenticationController : IUserAuthentication
 {
     private readonly IAuthenticateUseCase _authentication;
-    private readonly IRegisterAccountUseCase _registration;
+    private readonly IUserAccountInteractor _registration;
     private readonly IUser _user;
     
-    public UserAuthenticationController(IAuthenticateUseCase authentication, IRegisterAccountUseCase registration, IUser user)
+    public UserAuthenticationController(IAuthenticateUseCase authentication, IUserAccountInteractor registration, IUser user)
     {
         _authentication = authentication;
         _registration = registration;

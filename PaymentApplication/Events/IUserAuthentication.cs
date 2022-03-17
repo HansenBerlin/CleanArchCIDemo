@@ -2,7 +2,7 @@
 
 namespace PaymentApplication.Events;
 
-public interface IUserIsAuthenticating
+public interface IUserAuthentication
 {
     Task<string> CheckForUnusedUsername();
     Task<bool> CheckIfUsernameIsRegistered(string username);

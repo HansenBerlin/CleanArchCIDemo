@@ -7,6 +7,6 @@ public enum MainMenuSelection
     Login,
     NewSavingsAccount,
     ShowSavingsAccount,
-    DeleteAccount,
+    DeleteUserAccount,
     Logout
 }

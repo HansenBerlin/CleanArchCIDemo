@@ -18,27 +18,38 @@ public static class Program
     {
         var client = new HttpClient();
         IAuthenticateUseCase auth = new LoginController(client, ApiStrings.BaseUrl);
-        ICheckPasswordSecurityUseCase pwCheck = new PasswordSecurityController();
-        IRegisterAccountUseCase reg = new RegisterController(client, ApiStrings.BaseUrl, pwCheck);
+        ISecurityPolicyInteractor pwCheck = new PasswordSecurityController();
+        IUserAccountInteractor reg = new UserUserAccountController(client, ApiStrings.BaseUrl, pwCheck);
 
         IUser user = new UserEntity();
-        IUserIsAuthenticating userAuth = new UserAuthenticationController(auth, reg, user);
+        IUserAuthentication userAuth = new UserAuthenticationController(auth, reg, user);
 
         ISelectionValidation selectionValidationController = new SelectionValidationController(user);
         IMenuOptions menuOptions = new MenuOptionsController(selectionValidationController);
         
-        var selection = menuOptions.SelectFromMainMenu();
+        MainMenuSelection selection = menuOptions.SelectFromMainMenu();
 
-        if (selection == MainMenuSelection.Register)
+        while (selection != MainMenuSelection.Cancel)
         {
-            string userName = await userAuth.CheckForUnusedUsername();
-            if (string.IsNullOrEmpty(userName) == false)
+            if (selection == MainMenuSelection.Register)
             {
-                user.Name = userName;
-                await userAuth.IsNewUserRegisteredWithPasswordCheck(userName);
+                string userName = await userAuth.CheckForUnusedUsername();
+                if (string.IsNullOrEmpty(userName) == false)
+                {
+                    user.Name = userName;
+                    await userAuth.IsNewUserRegisteredWithPasswordCheck(userName);
+                }
             }
-        }
 
-        menuOptions.SelectFromMainMenu();
+            if (selection == MainMenuSelection.NewSavingsAccount)
+            {
+                
+                
+            }
+
+            selection = menuOptions.SelectFromMainMenu();
+            
+        }
+        
     }
 }

@@ -7,7 +7,7 @@ using PaymentCore.UseCases;
 
 namespace PaymentApplication.Controller;
 
-public class PasswordSecurityController : ICheckPasswordSecurityUseCase
+public class PasswordSecurityController : ISecurityPolicyInteractor
 {
     public bool IsPasswordCompliantToSecurityRules(string password, PasswordSecurityRules rules)
     {
