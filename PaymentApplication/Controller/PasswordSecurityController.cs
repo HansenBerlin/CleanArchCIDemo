@@ -8,8 +8,8 @@ public class PasswordSecurityController : ISecurityPolicyInteractor
 {
     public bool IsPasswordCompliantToSecurityRules(string password, PasswordSecurityRules rules)
     {
-        var passwordChecker = new PasswordSecurityChecker(rules.MinLength, rules.SpecialChars, rules.NoReservedChars,
-            rules.LowerUpper, rules.Digits);
+        var passwordChecker = new PasswordSecurityChecker(PasswordSecurityRules.MinLength, PasswordSecurityRules.SpecialChars, PasswordSecurityRules.NoReservedChars,
+            PasswordSecurityRules.LowerUpper, PasswordSecurityRules.Digits);
         return passwordChecker.IsPasswordSecure(password);
     }
     

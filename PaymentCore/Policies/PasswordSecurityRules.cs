@@ -2,9 +2,9 @@
 
 public record PasswordSecurityRules
 {
-    public int MinLength { get; } = 12;
-    public bool LowerUpper { get; } = true;
-    public bool Digits { get; } = true;
-    public int SpecialChars { get; } = 0;
-    public bool NoReservedChars { get; } = true;
+    public static int MinLength => 12;
+    public static bool LowerUpper => true;
+    public static bool Digits => true;
+    public static int SpecialChars => 0;
+    public static bool NoReservedChars => true;
 }

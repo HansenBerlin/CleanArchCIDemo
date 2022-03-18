@@ -64,8 +64,6 @@ public class UserAuthenticationController : HttpRequestController, IUserAuthenti
         user.AuthState = AuthenticationState.InsecurePassword;
         return user;
     }
-    
-     
 
     public Task<bool> UnRegister(string username)
     {

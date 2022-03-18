@@ -82,29 +82,6 @@ public class UserRepository : IUserRepository
         return value;
     }
 
-    /*
-    public async Task<IUser> Login(IUser user)
-    {
-        await _connection.OpenAsync();
-        string sql =
-            $"SELECT us.id, savings_amount, max_negative, max_spending_per_day " +
-            $"FROM user us JOIN savings_account sa ON us.id = sa.fk_user " +
-            $"WHERE us.name = '{user.Name}';";
-        
-        await using var cmd = new MySqlCommand(sql, _connection);
-        await using var reader = await cmd.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            user.Id = reader.GetInt32(0);
-            user.UserSavingsAccount.Savings = reader.GetDouble(1);
-            user.UserSavingsAccount.NegativeAllowed = reader.GetDouble(2);
-            user.UserSavingsAccount.MaxSpendingPerDay = reader.GetDouble(3);
-        }
-        await _connection.CloseAsync();
-
-        return user;
-    }*/
-
     public async Task<int> AddNewUser(string userName)
     {
         await _connection.OpenAsync();

@@ -8,5 +8,4 @@ public interface IUserRepository
     Task<bool> IsPasswordHashMatching(string name, string pwHash);
     Task<bool> IsNameExisting(string name);
     Task<int> SetLoginState(string name, bool isLoggedIn);
-    //Task <IUser> Login(IUser user);
 }

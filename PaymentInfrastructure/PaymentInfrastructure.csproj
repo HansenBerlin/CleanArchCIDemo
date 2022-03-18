@@ -11,10 +11,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Behaviours" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\PaymentCore\PaymentCore.csproj" />
     </ItemGroup>
 
