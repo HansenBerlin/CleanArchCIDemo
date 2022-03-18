@@ -39,7 +39,8 @@ public class MainViewController
                                                                                            
 
 Welcome to the Payment App. What would you like to do?
-(Use the arrow keys to cycle through options and press enter to select an option)";
+(Use the arrow keys to cycle through options and press enter to select an option)
+ ";
 
         var options = _limitOptions.LimitMainMenuOptions();
         var mainMenu = new MasterMenu(prompt, options);
@@ -71,7 +72,7 @@ Welcome to the Payment App. What would you like to do?
     private async Task ShowUserAccountOptions()
     {
         var options = _limitOptions.LimitUserAccountMenuOptions();
-        string prompt = "Account Optionen: ";
+        string prompt = "USER ACCOUNT OPTIONS: ";
         var userAccountMenu = new MasterMenu(prompt, options);
         var selectedIndex = (UserAccountOptions)userAccountMenu.Run();
 
@@ -104,19 +105,21 @@ Welcome to the Payment App. What would you like to do?
     private async Task ShowSavingsAccountOptions()
     {
         var options = _limitOptions.LimitSavingsAccountMenuOptions();
-        string prompt = "Savings Account Options: ";
-        var savingsAccountMenu = new MasterMenu(prompt, options);
+        string prompt = "SAVINGS ACCOUNT OPTIONS\n\n";
+        string accountData = await _savingsAccountController.ShowAccountData();
+        var savingsAccountMenu = new MasterMenu(prompt + accountData, options);
         var selectedIndex = (SavingsAccountOptions)savingsAccountMenu.Run();
 
         if (selectedIndex == SavingsAccountOptions.Send)
         {
-            await _savingsAccountController.ShowAccountData();
-            await _savingsAccountController.SendPayment();
+            string result = await _savingsAccountController.SendPayment();
+            WriteLine(result);
             Wait();
         }
         else if (selectedIndex == SavingsAccountOptions.Deposit)
         {
-            await _savingsAccountController.MakeDeposit();
+            string result = await _savingsAccountController.MakeDeposit();
+            WriteLine(result);
             Wait();
         }
         else if (selectedIndex == SavingsAccountOptions.ChangeDailyLimit)

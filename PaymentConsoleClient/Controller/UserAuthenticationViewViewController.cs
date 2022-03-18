@@ -20,7 +20,7 @@ public class UserAuthenticationViewViewController : IUserAuthenticationViewContr
     
     public async Task<string> ValidateUsernameInput()
     {
-        Console.WriteLine("Neuen Nutzer registrieren. \nx zum Abbrechen oder \nName eingeben: ");
+        Console.WriteLine("\nNEW USER REGISTRATION\ntype x to cancel\nUsername: ");
         while (true)
         {
             string? username = Console.ReadLine();
@@ -33,16 +33,18 @@ public class UserAuthenticationViewViewController : IUserAuthenticationViewContr
             {
                 return username;
             }
-            Console.WriteLine("Nutzername bereits vergeben. Bitte einen anderen auswählen.");
+            Console.WriteLine("Username already in use. Please choose another one.");
         }
     }
 
     public async Task<string> ValidateLoginInput()
     {
-        Console.WriteLine("LOGIN. \nx zum Abbrechen oder \nNutzername und Passwort eingeben: ");
+        Console.WriteLine("\nLOGIN\ntype x to cancel \n");
         while (true)
         {
+            Console.WriteLine("Username:");
             string? username = Console.ReadLine();
+            Console.WriteLine("Password:");
             string? pw = Console.ReadLine();
             if (username == "x" || pw == "x")
             {
@@ -59,7 +61,7 @@ public class UserAuthenticationViewViewController : IUserAuthenticationViewContr
     {
         while (true)
         {
-            Console.WriteLine("Sicheres Passwort auswählen. \nx zum abbrechen \nEingabe:");
+            Console.WriteLine("\nChoose secure password. \ntype x to cancel \nPassword:");
             string pw = Console.ReadLine() ?? string.Empty;
             if (pw == "x")
             {
@@ -69,19 +71,15 @@ public class UserAuthenticationViewViewController : IUserAuthenticationViewContr
             var user = await _interactor.Register(pw, username);
             Console.WriteLine(user.AuthState);
 
-            if (user.AuthState == AuthenticationState.InsecurePassword)
+            switch (user.AuthState)
             {
-                return "PASSWORD NOT SECURE OR CONTAINING FORBIDDEN CHARACTERS";
-            }
-            else if (user.AuthState == AuthenticationState.LoggedIn)
-            {
-                Console.WriteLine("Erfolgreich registriert und eingeloggt.");
-                _user.CopyProperties(user);
-                return "REGISTRATION SUCCESSFUL";
-            }
-            else
-            {
-                return $"REGISTRATION FAILED WITH STATUS: {_user.AuthState}";
+                case AuthenticationState.InsecurePassword:
+                    return "PASSWORD NOT SECURE OR CONTAINING FORBIDDEN CHARACTERS";
+                case AuthenticationState.LoggedIn:
+                    _user.CopyProperties(user);
+                    return "REGISTRATION SUCCESSFUL";
+                default:
+                    return $"REGISTRATION FAILED WITH STATUS: {_user.AuthState}";
             }
         }
     }

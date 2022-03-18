@@ -65,11 +65,11 @@ public class SavingsAccountViewController : ISavingsAccountViewController
         return $"Deposit done with state: {paymentState}";
     }
 
-    public async Task ShowAccountData()
+    public async Task<string> ShowAccountData()
     {
         var account = await _interactor.GetUserAccount(_user.Name);
         _account.DeepCopy(account);
-        WriteLine($"---------------------------------------\n" +
+        return   ($"---------------------------------------\n" +
                   $"Account Id:            {_account.Id}\n" +
                   $"Available Funds:       {_account.Savings}\n" +
                   $"Max. negative allowed: {_account.NegativeAllowed}\n" +
