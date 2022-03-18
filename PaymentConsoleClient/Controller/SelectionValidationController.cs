@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PaymentConsoleClient.Enums;
 using PaymentConsoleClient.Interfaces;
+using PaymentConsoleClient.ValueObjects;
 using PaymentCore.Emuns;
 using PaymentCore.Interfaces;
 
@@ -17,27 +18,39 @@ public class SelectionValidationController : ISelectionValidation
         _user = user;
     }
 
-    public List<MainMenuSelection> LimitOptionsMainMenu()
+    public Dictionary<object, string> LimitMainMenuOptions()
     {
-        var allValues = Enum.GetValues(typeof(MainMenuSelection))
-            .Cast<MainMenuSelection>()
-            .ToList();
-        switch (_user.AuthState)
+        var options = new MenuOptions();
+        var allValues = options.MainMenu;
+
+        if (_user.AuthState != AuthenticationState.LoggedIn)
         {
-            case AuthenticationState.LoggedIn:
-                allValues.RemoveRange(1, 2);
-                break;
-            case AuthenticationState.LoggedOut:
-                allValues.RemoveRange(3, 3);
-                break;
+            allValues.Remove(MainMenuOptions.SavingsAccountOptions);
         }
         return allValues;
     }
 
-    public List<SavingsAccountSelection> LimitOptionsSavingsAccountMenu()
+    public Dictionary<object, string> LimitUserAccountMenuOptions()
     {
-        var allValues = Enum.GetValues(typeof(SavingsAccountSelection))
-            .Cast<SavingsAccountSelection>()
+        var options = new MenuOptions();
+        var allValues = options.UserAccountMenu;
+
+        if (_user.AuthState == AuthenticationState.LoggedIn)
+        {
+            allValues.Remove(UserAccountOptions.Login);
+            allValues.Remove(UserAccountOptions.Register);
+        }
+        else
+        {
+            allValues.Remove(UserAccountOptions.Logout);
+        }
+        return allValues;
+    }
+
+    public List<SavingsAccountOptions> LimitOptionsSavingsAccountMenu()
+    {
+        var allValues = Enum.GetValues(typeof(SavingsAccountOptions))
+            .Cast<SavingsAccountOptions>()
             .ToList();
         return allValues;
     }

@@ -7,6 +7,7 @@ using PaymentApplication.Events;
 using PaymentApplication.ValueObjects;
 using PaymentConsoleClient.Controller;
 using PaymentConsoleClient.Enums;
+using PaymentConsoleClient.Events;
 using PaymentConsoleClient.Interfaces;
 using PaymentCore.Entities;
 using PaymentCore.Interfaces;
@@ -31,13 +32,17 @@ public static class Program
         ISavingsAccountInteractionController sacAcc = new SavingsAccountInteractionController(sai, savingsAcc);
 
         ISelectionValidation selectionValidationController = new SelectionValidationController(user);
-        IMenuOptions menuOptions = new MenuOptionsController(selectionValidationController);
+        //IMenuOptions menuOptions = new MenuOptionsController(selectionValidationController);
         
-        MainMenuSelection selection = menuOptions.SelectFromMainMenu();
+        //MainMenuOptions options = menuOptions.SelectFromMainMenu();
 
-        while (selection != MainMenuSelection.Cancel)
+        var viewController = new ViewController(uai, selectionValidationController);
+        viewController.Start();
+
+        /*
+        while (options != MainMenuOptions.Cancel)
         {
-            if (selection == MainMenuSelection.Register)
+            if (options == MainMenuOptions.Register)
             {
                 string userName = await userAuth.ValidateUsernameInput();
                 if (string.IsNullOrEmpty(userName) == false)
@@ -48,18 +53,18 @@ public static class Program
                 }
             }
             
-            if (selection == MainMenuSelection.Login)
+            if (options == MainMenuOptions.Login)
             {
                 var status = await userAuth.ValidateLoginInput();
                 Console.WriteLine(status);
             }
 
-            if (selection == MainMenuSelection.ShowSavingsAccount)
+            if (options == MainMenuOptions.ShowSavingsAccount)
             {
                 while (true)
                 {
-                    SavingsAccountSelection subSelection = menuOptions.SelectFromSavingsAccountMenu();
-                    if (subSelection == SavingsAccountSelection.Send)
+                    SavingsAccountOptions subOptions = menuOptions.SelectFromSavingsAccountMenu();
+                    if (subOptions == SavingsAccountOptions.Send)
                     {
                         Console.WriteLine("Send");
                         Console.WriteLine($"Savings:      {savingsAcc.Savings}");
@@ -67,7 +72,7 @@ public static class Program
                         Console.WriteLine($"Max per day:  {savingsAcc.MaxSpendingPerDay}");
                     
                     }
-                    else if (subSelection == SavingsAccountSelection.Deposit)
+                    else if (subOptions == SavingsAccountOptions.Deposit)
                     {
                         Console.WriteLine("Deposit");
                     }
@@ -78,7 +83,7 @@ public static class Program
                     }
                 }
             }
-            selection = menuOptions.SelectFromMainMenu();
-        }
+            options = menuOptions.SelectFromMainMenu();
+        }*/
     }
 }

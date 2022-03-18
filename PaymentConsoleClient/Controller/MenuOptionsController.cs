@@ -14,19 +14,20 @@ public class MenuOptionsController : IMenuOptions
         _selectionValidation = selectionValidation;
     }
     
-    public MainMenuSelection SelectFromMainMenu()
+    public MainMenuOptions SelectFromMainMenu()
     {
-        var options = _selectionValidation.LimitOptionsMainMenu().ToArray();
-        Console.WriteLine($"Available Options: \n{SplitOptions(options)}");
-        while (true)
-        {
-            int[] allowed = Array.ConvertAll(options, value => (int) value);
-            int input = _selectionValidation.RestrictInputToInt(allowed);
-            return (MainMenuSelection)input;
-        }
+        // var options = _selectionValidation.LimitMainMenuOptions().ToArray();
+        // Console.WriteLine($"Available Options: \n{SplitOptions(options)}");
+        // while (true)
+        // {
+        //     int[] allowed = Array.ConvertAll(options, value => (int) value);
+        //     int input = _selectionValidation.RestrictInputToInt(allowed);
+        //     return (MainMenuOptions)input;
+        // }
+        return MainMenuOptions.Exit;
     }
     
-    public SavingsAccountSelection SelectFromSavingsAccountMenu()
+    public SavingsAccountOptions SelectFromSavingsAccountMenu()
     {
         var options = _selectionValidation.LimitOptionsSavingsAccountMenu().ToArray();
         Console.WriteLine($"Available Options: \n{SplitOptions(options)}");
@@ -34,27 +35,27 @@ public class MenuOptionsController : IMenuOptions
         {
             int[] allowed = Array.ConvertAll(options, value => (int) value);
             int input = _selectionValidation.RestrictInputToInt(allowed);
-            return (SavingsAccountSelection)input;
+            return (SavingsAccountOptions)input;
         }
     }
 
-    public MainMenuSelection SelectFromRegistrationMenu()
+    public MainMenuOptions SelectFromRegistrationMenu()
     {
         throw new System.NotImplementedException();
     }
 
-    public MainMenuSelection SelectFromLoginMenu()
+    public MainMenuOptions SelectFromLoginMenu()
     {
         throw new System.NotImplementedException();
     }
 
-    private string SplitOptions(MainMenuSelection[] options)
+    private string SplitOptions(MainMenuOptions[] options)
     {
         return options.Aggregate("", (current, o) 
             => current + $"{(int) o}: {o} \n");
     }
     
-    private string SplitOptions(SavingsAccountSelection[] options)
+    private string SplitOptions(SavingsAccountOptions[] options)
     {
         return options.Aggregate("", (current, o) 
             => current + $"{(int) o}: {o} \n");

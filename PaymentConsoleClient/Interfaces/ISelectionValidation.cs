@@ -5,8 +5,9 @@ namespace PaymentConsoleClient.Interfaces;
 
 public interface ISelectionValidation
 {
-    List<MainMenuSelection> LimitOptionsMainMenu();
-    List<SavingsAccountSelection> LimitOptionsSavingsAccountMenu();   
+    Dictionary<object, string> LimitMainMenuOptions();
+    Dictionary<object, string> LimitUserAccountMenuOptions();
+    List<SavingsAccountOptions> LimitOptionsSavingsAccountMenu();   
 
     int RestrictInputToInt(int[] allowed);
 
