@@ -39,7 +39,7 @@ public class UserRepository : IUserRepository
         return value;
     }
     
-    public async Task<bool> IsPasswordHashMatching(string name, string pwHash)
+    public async Task<bool> IsPasswordHashMatching(string? name, string pwHash)
     {
         await _connection.OpenAsync();
         string sql = $"SELECT pw_hash FROM user WHERE name = '{name}';";
@@ -55,7 +55,7 @@ public class UserRepository : IUserRepository
         return hash == pwHash;
     }
     
-    public async Task<bool> IsNameExisting(string name)
+    public async Task<bool> IsNameExisting(string? name)
     {
         await _connection.OpenAsync();
         string sql = $"SELECT name FROM user WHERE name = '{name}';";
@@ -72,7 +72,7 @@ public class UserRepository : IUserRepository
         return userName == name;
     }
     
-    public async Task<int> SetLoginState(string name, bool isLoggedIn)
+    public async Task<int> SetLoginState(string? name, bool isLoggedIn)
     {
         await _connection.OpenAsync();
         string sql = $"UPDATE user SET is_logged_in = {(isLoggedIn ? 1 : 0)} WHERE name = '{name}';";

@@ -12,6 +12,4 @@ public class PasswordSecurityController : ISecurityPolicyInteractor
             PasswordSecurityRules.LowerUpper, PasswordSecurityRules.Digits);
         return passwordChecker.IsPasswordSecure(password);
     }
-    
-    
 }

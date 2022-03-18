@@ -1,0 +1,136 @@
+﻿@page "/"
+@inject IUserAuthenticationInteractor _authentication;
+@using System.ComponentModel.DataAnnotations
+@using PaymentCore.Emuns
+@using PaymentCore.Entities
+@using PaymentCore.Interfaces
+@using PaymentCore.UseCases
+
+<MudText>@user.Name</MudText>
+<MudText>@user.AuthState</MudText>
+
+    <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+        <DataAnnotationsValidator/>
+        <MudGrid>
+            <MudItem xs="12" sm="7">
+                <MudCard>
+                    <MudCardContent>
+                        <MudTextField Label="Username" HelperText="Upper and lower case will be ignored"
+                                      @bind-Value="model.Username" For="@(() => model.Username)"/>
+                        <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                                      @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password"/>
+                        <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+                                      @bind-Value="model.Password2" For="@(() => model.Password2)" InputType="InputType.Password"/>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="RegisterButtonClick">Register</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="5">
+                <MudPaper Class="pa-4 mud-height-full">
+                    <MudText Typo="Typo.subtitle2">Validation Summary</MudText>
+                    @if (success)
+                    {
+                        <MudText Color="Color.Success">Success</MudText>
+                    }
+                    else
+                    {
+                        <MudText Color="@Color.Error">
+                            <ValidationSummary/>
+                        </MudText>
+                    }
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12">
+                <MudText Typo="Typo.body2" Align="Align.Center">
+                    Fill out the form correctly to see the success message.
+                </MudText>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+
+    <EditForm Model="@model2" OnValidSubmit="OnValidSubmit2">
+        <DataAnnotationsValidator/>
+        <MudGrid>
+            <MudItem xs="12" sm="7">
+                <MudCard>
+                    <MudCardContent>
+                        <MudTextField Label="Username" HelperText="Upper and lower case will be ignored"
+                                      @bind-Value="model2.Username" For="@(() => model2.Username)"/>
+                        <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                                      @bind-Value="model2.Password" For="@(() => model2.Password)" InputType="InputType.Password"/>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="LoginButtonClick">Login</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </EditForm>
+
+
+
+
+@code 
+{
+
+    private RegisterAccountForm model = new();
+    private RegisterAccountForm model2 = new();
+    private IUser user = new UserEntity();
+    bool success;
+    bool isLoggedIn = false;
+
+    public class RegisterAccountForm
+    {
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
+        [StringLength(12, ErrorMessage = "Password must be at least 8 characters long.", MinimumLength = 12)]
+        public string Password { get; set; }
+
+        [Required]
+        [Compare(nameof(Password))]
+        public string Password2 { get; set; }
+
+    }
+
+    private async Task OnValidSubmit(EditContext context)
+    {
+        success = true;
+        
+        StateHasChanged();
+    }
+    
+    private async Task OnValidSubmit2(EditContext context)
+    {
+        return;
+        success = true;
+        var result = await _authentication.Authenticate(model2.Username, model2.Password);
+        user.CopyProperties(result);
+        if (user.AuthState == AuthenticationState.LoggedIn)
+            isLoggedIn = true;
+        StateHasChanged();
+    }
+
+    private async Task LoginButtonClick()
+    {
+        success = true;
+        var result = await _authentication.Authenticate(model2.Username, model2.Password);
+        user.CopyProperties(result);
+        if (user.AuthState == AuthenticationState.LoggedIn)
+            isLoggedIn = true;
+        StateHasChanged();
+    }
+    
+    private async Task RegisterButtonClick()
+    {
+        success = true;
+        var result = await _authentication.Register(model.Password, model.Username);
+        user.CopyProperties(result);
+        if (user.AuthState == AuthenticationState.LoggedIn)
+            isLoggedIn = true;
+        StateHasChanged();
+    }
+}

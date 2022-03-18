@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
+using PaymentApplication.Common;
 using PaymentApplication.ValueObjects;
 using PaymentCore.Emuns;
 using PaymentCore.Entities;
@@ -8,13 +9,19 @@ using PaymentCore.UseCases;
 
 namespace PaymentApplication.Controller;
 
-public class SavingsAccountController : HttpRequestController, ISavingsAccountInteractor
+public class SavingsAccountController : ISavingsAccountInteractor
 {
-    public SavingsAccountController(HttpClient client, string requestBaseUrl) : base(client, requestBaseUrl) { }
+    private readonly IHttpRequestController _httpRequestController;
+    public SavingsAccountController(IHttpRequestController httpRequestController)
+    {
+        _httpRequestController = httpRequestController;
+    }
 
     public async Task<IUserSavingsAccount> AddAccount(string username)
     {
-        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.AddNewSavingsAccount}/{username.ToLower()}/0");
+        string url = $"{ApiStrings.AddNewSavingsAccount}/{username.ToLower()}/0";
+        HttpResponseMessage response = await _httpRequestController.GetAsync(url);
+        //HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.AddNewSavingsAccount}/{username.ToLower()}/0");
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadAsAsync<SavingsAccountEntity>();
@@ -32,8 +39,10 @@ public class SavingsAccountController : HttpRequestController, ISavingsAccountIn
         }
         PaymentState result = PaymentState.Pending;
         HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(paymentData), Encoding.UTF8);
-        httpContent.Headers.ContentType = new("application/json");
-        HttpResponseMessage response = await Client.PostAsync($"{RequestBaseUrl}/{ApiStrings.MakePayment}", httpContent);
+        //httpContent.Headers.ContentType = new("application/json");
+        HttpResponseMessage response = await _httpRequestController.PostAsync($"{ApiStrings.MakePayment}", httpContent);
+
+        //HttpResponseMessage response = await Client.PostAsync($"{RequestBaseUrl}/{ApiStrings.MakePayment}", httpContent);
         if (response.IsSuccessStatusCode)
         {
             string responseMessage = await response.Content.ReadAsStringAsync();
@@ -47,8 +56,10 @@ public class SavingsAccountController : HttpRequestController, ISavingsAccountIn
     {
         PaymentState result = PaymentState.Pending;
         HttpContent httpContent = new StringContent(JsonConvert.SerializeObject(paymentData), Encoding.UTF8);
-        httpContent.Headers.ContentType = new("application/json");
-        HttpResponseMessage response = await Client.PostAsync($"{RequestBaseUrl}/{ApiStrings.Deposit}", httpContent);
+        //httpContent.Headers.ContentType = new("application/json");
+        HttpResponseMessage response = await _httpRequestController.PostAsync($"{ApiStrings.Deposit}", httpContent);
+
+        //HttpResponseMessage response = await Client.PostAsync($"{RequestBaseUrl}/{ApiStrings.Deposit}", httpContent);
         if (response.IsSuccessStatusCode)
         {
             string responseMessage = await response.Content.ReadAsStringAsync();
@@ -60,7 +71,10 @@ public class SavingsAccountController : HttpRequestController, ISavingsAccountIn
 
     public async Task<bool> IsAccountAvailable(int iD)
     {
-        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.CheckAccountAvailabilityById}/{iD}");
+        string url = $"{ApiStrings.CheckAccountAvailabilityById}/{iD}";
+        HttpResponseMessage response = await _httpRequestController.GetAsync(url);
+
+        //HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.CheckAccountAvailabilityById}/{iD}");
         bool isAccountAvailable = false;
         if (response.IsSuccessStatusCode)
         {
@@ -70,9 +84,12 @@ public class SavingsAccountController : HttpRequestController, ISavingsAccountIn
         return isAccountAvailable;
     }
 
-    public async Task<IUserSavingsAccount> GetUserAccount(string username)
+    public async Task<IUserSavingsAccount> GetUserAccount(string? username)
     {
-        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.CheckAccountAvailabilityByUser}/{username}");
+        string url = $"{ApiStrings.CheckAccountAvailabilityByUser}/{username}";
+        HttpResponseMessage response = await _httpRequestController.GetAsync(url);
+
+        //HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.CheckAccountAvailabilityByUser}/{username}");
         IUserSavingsAccount savingsAccount = new SavingsAccountEntity();
         if (response.IsSuccessStatusCode)
         {

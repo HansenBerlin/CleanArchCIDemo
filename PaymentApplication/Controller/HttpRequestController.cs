@@ -1,13 +1,27 @@
-﻿namespace PaymentApplication.Controller;
+﻿using PaymentApplication.Common;
+using PaymentApplication.ValueObjects;
 
-public class HttpRequestController
+namespace PaymentApplication.Controller;
+
+public class HttpRequestController : IHttpRequestController
 {
-    protected readonly HttpClient Client;
-    protected readonly string RequestBaseUrl;
+    private readonly HttpClient _client;
+    private readonly string _requestBaseUrl;
 
-    protected HttpRequestController(HttpClient client, string requestBaseUrl)
+    public HttpRequestController()
     {
-        Client = client;
-        RequestBaseUrl = requestBaseUrl;
+        _client = new HttpClient();
+        _requestBaseUrl = ApiStrings.BaseUrl;
+    }
+
+    public async Task<HttpResponseMessage> GetAsync(string url)
+    {
+        return await _client.GetAsync($"{_requestBaseUrl}/{url}");
+    }
+    
+    public async Task<HttpResponseMessage> PostAsync(string url, HttpContent content)
+    {
+        content.Headers.ContentType = new("application/json");
+        return await _client.PostAsync($"{_requestBaseUrl}/{url}", content);
     }
 }

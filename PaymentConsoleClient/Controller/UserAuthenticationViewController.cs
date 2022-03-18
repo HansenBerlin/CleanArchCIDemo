@@ -7,12 +7,12 @@ using PaymentCore.UseCases;
 
 namespace PaymentConsoleClient.Controller;
 
-public class UserAuthenticationViewViewController : IUserAuthenticationViewController
+public class UserAuthenticationViewController : IUserAuthenticationViewController
 {
     private readonly IUserAuthenticationInteractor _interactor;
     private readonly IUser _user;
     
-    public UserAuthenticationViewViewController(IUserAuthenticationInteractor interactor, IUser user)
+    public UserAuthenticationViewController(IUserAuthenticationInteractor interactor, IUser user)
     {
         _interactor = interactor;
         _user = user;

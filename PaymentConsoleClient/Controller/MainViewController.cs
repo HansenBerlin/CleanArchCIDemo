@@ -64,8 +64,7 @@ Welcome to the Payment App. What would you like to do?
 
     private void ExitApplication()
     {
-        WriteLine("\nPress any key to exit...");
-        ReadKey(true);
+        WriteLine("\nBye!");
         Environment.Exit(0);
     }
 

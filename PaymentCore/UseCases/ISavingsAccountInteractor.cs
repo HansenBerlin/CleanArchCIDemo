@@ -9,5 +9,5 @@ public interface ISavingsAccountInteractor
     Task<PaymentState> MakePayment(IPayment paymentData, IUserSavingsAccount account);
     Task<PaymentState> Deposit(IPayment paymentData);
     Task<bool> IsAccountAvailable(int iD);
-    Task<IUserSavingsAccount> GetUserAccount(string username);
+    Task<IUserSavingsAccount> GetUserAccount(string? username);
 }

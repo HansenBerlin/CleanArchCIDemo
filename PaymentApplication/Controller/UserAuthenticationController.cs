@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using PaymentApplication.Common;
 using PaymentApplication.ValueObjects;
 using PaymentCore.Emuns;
 using PaymentCore.Entities;
@@ -8,18 +9,22 @@ using PaymentCore.UseCases;
 
 namespace PaymentApplication.Controller;
 
-public class UserAuthenticationController : HttpRequestController, IUserAuthenticationInteractor
+public class UserAuthenticationController : IUserAuthenticationInteractor
 {
     private readonly ISecurityPolicyInteractor _pwCheck;
+    private readonly IHttpRequestController _requestController;
 
-    public UserAuthenticationController(HttpClient client, string requestBaseUrl, ISecurityPolicyInteractor pwCheck) : base(client, requestBaseUrl)
+    public UserAuthenticationController(ISecurityPolicyInteractor pwCheck, IHttpRequestController requestController)
     {
         _pwCheck = pwCheck;
+        _requestController = requestController;
     }
     
     public async Task<bool> IsNameAvailable(string username)
     {
-        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.NameCheck}/{username.ToLower()}");
+        string url = $"{ApiStrings.NameCheck}/{username.ToLower()}";
+        HttpResponseMessage response = await _requestController.GetAsync(url);
+        //HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.NameCheck}/{username.ToLower()}");
         bool isNameInUse = false;
         if (response.IsSuccessStatusCode)
         {
@@ -31,7 +36,10 @@ public class UserAuthenticationController : HttpRequestController, IUserAuthenti
 
     public async Task<IUser> Authenticate(string username, string password)
     {
-        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.UserAuthenticate}/{username.ToLower()}/{password}");
+        string url = $"{ApiStrings.UserAuthenticate}/{username.ToLower()}/{password}";
+        HttpResponseMessage response = await _requestController.GetAsync(url);
+
+        //HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.UserAuthenticate}/{username.ToLower()}/{password}");
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadAsAsync<UserEntity>();
@@ -47,8 +55,8 @@ public class UserAuthenticationController : HttpRequestController, IUserAuthenti
         bool isPasswordSecure = _pwCheck.IsPasswordCompliantToSecurityRules(password, new PasswordSecurityRules());
         if (isPasswordSecure)
         {
-            string uri = $"{RequestBaseUrl}/{ApiStrings.UserRegister}/{user.Name}/{password}";
-            HttpResponseMessage response = await Client.GetAsync(new Uri(uri));
+            string uri = $"{ApiStrings.UserRegister}/{user.Name}/{password}";
+            HttpResponseMessage response = await _requestController.GetAsync(uri);
             if (response.IsSuccessStatusCode)
             {
                 user = await response.Content.ReadAsAsync<UserEntity>();
@@ -72,7 +80,10 @@ public class UserAuthenticationController : HttpRequestController, IUserAuthenti
 
     public async Task<AuthenticationState> Logout(string userName)
     {
-        HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.UserLogout}/{userName}");
+        string url = $"{ApiStrings.UserLogout}/{userName}";
+        HttpResponseMessage response = await _requestController.GetAsync(url);
+
+        //HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.UserLogout}/{userName}");
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadAsAsync<AuthenticationState>();
