@@ -2,7 +2,7 @@
 
 public interface IPayment
 {
-    string ToUser { get; set; }
-    string FromUser { get; set; }
+    int ToAccountId { get; set; }
+    int FromAccountId { get; set; }
     double Amount { get; set; }
 }

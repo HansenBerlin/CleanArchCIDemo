@@ -1,5 +1,4 @@
-﻿using PaymentCore.Common;
-using PaymentCore.Emuns;
+﻿using PaymentCore.Emuns;
 using PaymentCore.Interfaces;
 
 namespace PaymentCore.Entities;
@@ -9,19 +8,16 @@ public class UserEntity : IUser
     public int Id { get; set; }
     public string Name { get; set; }
     public string PasswordHash { get; set; }
-    public IUserSavingsAccount UserSavingsAccount { get; set; }
+    public IUserSavingsAccount UserSavingsAccount { get; set; } = new SavingsAccountEntity();
     public AuthenticationState AuthState { get; set; }
-    private readonly IUserDeepCopy _deepCopy;
     
-    
-    public UserEntity()
-    {
-        //UserSavingsAccount = new SavingsAccountEntity();
-        _deepCopy = new UserDeepCopy();
-    }
 
     public void CopyProperties(IUser copyFrom)
     {
-        _deepCopy.CopyUserProperties(this, copyFrom);
+        Id = copyFrom.Id;
+        Name = copyFrom.Name;
+        AuthState = copyFrom.AuthState;
+        PasswordHash = copyFrom.PasswordHash;
+        UserSavingsAccount.DeepCopy(copyFrom.UserSavingsAccount);
     }
 }

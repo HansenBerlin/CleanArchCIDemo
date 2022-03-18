@@ -1,7 +1,4 @@
-﻿using System.Security;
-using System.Security.Cryptography;
-using System.Text;
-using PasswordCheckerLibrary;
+﻿using PasswordCheckerLibrary;
 using PaymentCore.Policies;
 using PaymentCore.UseCases;
 

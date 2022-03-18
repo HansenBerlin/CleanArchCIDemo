@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using PaymentConsoleClient.Enums;
 
 namespace PaymentConsoleClient.Interfaces;
 
@@ -7,8 +6,8 @@ public interface ISelectionValidation
 {
     Dictionary<object, string> LimitMainMenuOptions();
     Dictionary<object, string> LimitUserAccountMenuOptions();
-    List<SavingsAccountOptions> LimitOptionsSavingsAccountMenu();   
+    Dictionary<object, string> LimitSavingsAccountMenuOptions();   
 
-    int RestrictInputToInt(int[] allowed);
-
+    int RestrictInputToPositiveInt();
+    double RestrictInputToDouble();
 }

@@ -1,6 +1,4 @@
-﻿using PaymentCore.Interfaces;
-
-namespace PaymentCore.Repositories;
+﻿namespace PaymentCore.Repositories;
 
 public interface IUserRepository
 {

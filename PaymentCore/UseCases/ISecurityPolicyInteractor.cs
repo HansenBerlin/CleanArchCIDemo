@@ -1,5 +1,4 @@
-﻿using System.Security;
-using PaymentCore.Policies;
+﻿using PaymentCore.Policies;
 
 namespace PaymentCore.UseCases;
 

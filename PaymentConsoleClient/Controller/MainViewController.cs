@@ -1,29 +1,32 @@
 ﻿using System;
+using System.Threading.Tasks;
+using PaymentApplication.Common;
 using PaymentConsoleClient.Enums;
 using PaymentConsoleClient.Interfaces;
 using PaymentConsoleClient.Views;
-using PaymentCore.UseCases;
 using static System.Console;
 
 namespace PaymentConsoleClient.Controller;
 
-public class ViewController
+public class MainViewController
 {
-    private readonly IUserAccountInteractor _userAccountInteractor;
+    private readonly IUserAuthenticationViewController _userAuth;
     private readonly ISelectionValidation _limitOptions;
+    private readonly ISavingsAccountViewController _savingsAccountController;
 
-    public ViewController(IUserAccountInteractor userAccountInteractor, ISelectionValidation limitOptions)
+    public MainViewController(IUserAuthenticationViewController userAuth, ISelectionValidation limitOptions, ISavingsAccountViewController savingsAccountController)
     {
-        _userAccountInteractor = userAccountInteractor;
+        _userAuth = userAuth;
         _limitOptions = limitOptions;
+        _savingsAccountController = savingsAccountController;
     }
-    public void Start()
+    public async Task Start()
     {
         Title = "Payment App";
-        RunMainMenu();
+        await RunMainMenu();
     }
 
-    private void RunMainMenu()
+    private async Task RunMainMenu()
     {
         string prompt = @"
 
@@ -45,15 +48,17 @@ Welcome to the Payment App. What would you like to do?
         switch (selectedIndex)
         {
             case MainMenuOptions.UserAccountOptions:
-                ShowUserAccountOptions();
+                await ShowUserAccountOptions();
                 break;
             case MainMenuOptions.SavingsAccountOptions:
-                ShowSavingsAccountOptions();
+                await ShowSavingsAccountOptions();
                 break;
             case MainMenuOptions.Exit:
                 ExitApplication();
                 break;
         }
+
+        await RunMainMenu();
     }
 
     private void ExitApplication()
@@ -63,29 +68,71 @@ Welcome to the Payment App. What would you like to do?
         Environment.Exit(0);
     }
 
-    private void ShowUserAccountOptions()
+    private async Task ShowUserAccountOptions()
     {
         var options = _limitOptions.LimitUserAccountMenuOptions();
         string prompt = "Account Optionen: ";
         var userAccountMenu = new MasterMenu(prompt, options);
         var selectedIndex = (UserAccountOptions)userAccountMenu.Run();
-        
-        if (selectedIndex == UserAccountOptions.Back)
-            RunMainMenu();
-        else if (selectedIndex == UserAccountOptions.Login)
-            WriteLine("login");
-        else if (selectedIndex == UserAccountOptions.Register)
+
+        switch (selectedIndex)
         {
-            _userAccountInteractor.Register("asdasdasd34234234234KHKJHKJHKJHKJH", "User" + Guid.NewGuid());
-            WriteLine("register");
+            case UserAccountOptions.Back:
+                await RunMainMenu();
+                break;
+            case UserAccountOptions.Login:
+            {
+                var result = await _userAuth.ValidateLoginInput();
+                WriteLine(result);
+                Wait();
+                break;
+            }
+            case UserAccountOptions.Register:
+            {
+                string userName = await _userAuth.ValidateUsernameInput();
+                string result = await _userAuth.ValidateUserRegistrationInput(userName);
+                WriteLine(result);
+                Wait();
+                break;
+            }
+            case UserAccountOptions.Logout:
+                WriteLine("logout");
+                Wait();
+                break;
         }
-        else if (selectedIndex == UserAccountOptions.Logout)
-            WriteLine("logout");
-        
-        RunMainMenu();
     }
-    private void ShowSavingsAccountOptions()
+    private async Task ShowSavingsAccountOptions()
     {
-        WriteLine("Thats it for now");
+        var options = _limitOptions.LimitSavingsAccountMenuOptions();
+        string prompt = "Savings Account Options: ";
+        var savingsAccountMenu = new MasterMenu(prompt, options);
+        var selectedIndex = (SavingsAccountOptions)savingsAccountMenu.Run();
+
+        if (selectedIndex == SavingsAccountOptions.Send)
+        {
+            await _savingsAccountController.ShowAccountData();
+            await _savingsAccountController.SendPayment();
+            Wait();
+        }
+        else if (selectedIndex == SavingsAccountOptions.Deposit)
+        {
+            await _savingsAccountController.MakeDeposit();
+            Wait();
+        }
+        else if (selectedIndex == SavingsAccountOptions.ChangeDailyLimit)
+        {
+            WriteLine("Change daily limit");
+            Wait();
+        }
+        else if (selectedIndex == SavingsAccountOptions.Back)
+        {
+            await RunMainMenu();
+        }
+    }
+
+    private void Wait()
+    {
+        WriteLine("Press any key to continue...");
+        ReadKey(true);
     }
 }

@@ -4,11 +4,12 @@ namespace PaymentCore.Repositories;
 
 public interface ISavingsAccountRepository
 {
-    Task<int> AddFunds(int amount);
-    Task<int> SubstractFunds(int amount);
+    Task<int> AddFunds(double amount, int toId);
+    Task<int> SubstractFunds(double amount, int fromId);
     Task<int> ChangeDailyLimit(int amount);
     Task<int> ChangeMaxNegativeLimit(int amount);
     Task<IUserSavingsAccount> AddNewAccount(int initialAmount, string userName);
+    Task<bool> IsAccountAvailable(int iD);
     Task<IUserSavingsAccount> DeleteAccount(int accountId);
-    Task<List<IUserSavingsAccount>> GetUserSavingsAccounts(string userName);
+    Task<IUserSavingsAccount> GetUserSavingsAccount(string userName);
 }

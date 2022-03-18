@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using PaymentConsoleClient.Enums;
 using PaymentConsoleClient.Interfaces;
 using PaymentConsoleClient.ValueObjects;
@@ -47,23 +46,36 @@ public class SelectionValidationController : ISelectionValidation
         return allValues;
     }
 
-    public List<SavingsAccountOptions> LimitOptionsSavingsAccountMenu()
+    public Dictionary<object, string> LimitSavingsAccountMenuOptions()
     {
-        var allValues = Enum.GetValues(typeof(SavingsAccountOptions))
-            .Cast<SavingsAccountOptions>()
-            .ToList();
+        var options = new MenuOptions();
+        var allValues = options.SavingsAccountMenu;
         return allValues;
     }
     
-    public int RestrictInputToInt(int[] allowed)
+    public int RestrictInputToPositiveInt()
     {
         while (true)
         {
-            int.TryParse(Console.ReadLine(), out int input);
-            if (allowed.Contains(input))
+            bool isValid = int.TryParse(Console.ReadLine(), out int input);
+            if (isValid && input > 0)
             {
                 return input;
             }
+            Console.WriteLine("Invalid input. No integer or negative.");
+        }
+    }
+    
+    public double RestrictInputToDouble()
+    {
+        while (true)
+        {
+            bool isValid = double.TryParse(Console.ReadLine(), out double input);
+            if (isValid)
+            {
+                return input;
+            }
+            Console.WriteLine("Invalid input. No decimal or integer.");
         }
     }
 }

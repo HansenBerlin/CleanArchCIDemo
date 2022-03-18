@@ -1,5 +1,4 @@
 ﻿using PaymentCore.Repositories;
-using PaymentCore.Interfaces;
 using PaymentInfrastructure.ServicesController;
 using MySql.Data.MySqlClient;
 

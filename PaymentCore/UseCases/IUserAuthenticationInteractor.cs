@@ -1,15 +1,13 @@
-﻿using System.Security;
-using PaymentCore.Emuns;
+﻿using PaymentCore.Emuns;
 using PaymentCore.Interfaces;
 
 namespace PaymentCore.UseCases;
 
-public interface IUserAccountInteractor
+public interface IUserAuthenticationInteractor
 {
     Task<IUser> Register(string password, string username);
     Task<bool> UnRegister(string username);
-    Task<bool> IsNameAvailable(string username);
-    Task<AuthenticationState> Logout(string url, int userId);
+    Task<AuthenticationState> Logout(string userName);
     Task<IUser> Authenticate(string username, string password);
-
+    Task<bool> IsNameAvailable(string username);
 }

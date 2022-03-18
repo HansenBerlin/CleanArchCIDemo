@@ -1,13 +1,9 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 using PaymentApplication.Common;
 using PaymentApplication.Controller;
-using PaymentApplication.Events;
 using PaymentApplication.ValueObjects;
 using PaymentConsoleClient.Controller;
-using PaymentConsoleClient.Enums;
-using PaymentConsoleClient.Events;
 using PaymentConsoleClient.Interfaces;
 using PaymentCore.Entities;
 using PaymentCore.Interfaces;
@@ -20,24 +16,21 @@ public static class Program
     static async Task Main(string[] args)
     {
         var client = new HttpClient();
-        ISecurityPolicyInteractor pwCheck = new PasswordSecurityController();
-        IUserAccountInteractor uai = new LoginController(client, ApiStrings.BaseUrl, pwCheck);
-        ISavingsAccountInteractor sai = new SavingsAccountController(client, ApiStrings.BaseUrl);
-
         IUser user = new UserEntity();
-        IUserSavingsAccount savingsAcc = new SavingsAccountEntity();
-        user.UserSavingsAccount = savingsAcc;
-        
-        IUserAuthenticationController userAuth = new UserAuthenticationController(uai, user);
-        ISavingsAccountInteractionController sacAcc = new SavingsAccountInteractionController(sai, savingsAcc);
 
+        ISecurityPolicyInteractor pwCheck = new PasswordSecurityController();
+        IUserAuthenticationInteractor uai = new UserAuthenticationController(client, ApiStrings.BaseUrl, pwCheck);
+        ISavingsAccountInteractor sai = new SavingsAccountController(client, ApiStrings.BaseUrl);
         ISelectionValidation selectionValidationController = new SelectionValidationController(user);
+        IUserAuthenticationViewController userAuth = new UserAuthenticationViewViewController(uai, user);
+        ISavingsAccountViewController sacAcc = new SavingsAccountViewController(sai, user, selectionValidationController);
+
         //IMenuOptions menuOptions = new MenuOptionsController(selectionValidationController);
         
         //MainMenuOptions options = menuOptions.SelectFromMainMenu();
 
-        var viewController = new ViewController(uai, selectionValidationController);
-        viewController.Start();
+        var viewController = new MainViewController(userAuth, selectionValidationController, sacAcc);
+        await viewController.Start();
 
         /*
         while (options != MainMenuOptions.Cancel)

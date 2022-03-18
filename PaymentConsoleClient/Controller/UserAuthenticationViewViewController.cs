@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
 using PaymentApplication.Common;
-using PaymentApplication.Events;
 using PaymentCore.Emuns;
 using PaymentCore.Interfaces;
 using PaymentCore.UseCases;
 
 namespace PaymentConsoleClient.Controller;
 
-public class UserAuthenticationController : IUserAuthenticationController
+public class UserAuthenticationViewViewController : IUserAuthenticationViewController
 {
-    private readonly IUserAccountInteractor _interactor;
+    private readonly IUserAuthenticationInteractor _interactor;
     private readonly IUser _user;
     
-    public UserAuthenticationController(IUserAccountInteractor interactor, IUser user)
+    public UserAuthenticationViewViewController(IUserAuthenticationInteractor interactor, IUser user)
     {
         _interactor = interactor;
         _user = user;
@@ -47,16 +46,16 @@ public class UserAuthenticationController : IUserAuthenticationController
             string? pw = Console.ReadLine();
             if (username == "x" || pw == "x")
             {
-                return "Abbruch";
+                return "LOGIN FAILED";
             }
 
             IUser user = await _interactor.Authenticate(username, pw);
             _user.CopyProperties(user);
-            return "SUCCESS";
+            return "LOGIN SUCCESSFUL";
         }
     }
 
-    public async Task<bool> ValidateUserRegistrationInput(string username)
+    public async Task<string> ValidateUserRegistrationInput(string username)
     {
         while (true)
         {
@@ -64,7 +63,7 @@ public class UserAuthenticationController : IUserAuthenticationController
             string pw = Console.ReadLine() ?? string.Empty;
             if (pw == "x")
             {
-                return false;
+                return "REGISTRATION CANCELLED BY USER";
             }
             
             var user = await _interactor.Register(pw, username);
@@ -72,18 +71,17 @@ public class UserAuthenticationController : IUserAuthenticationController
 
             if (user.AuthState == AuthenticationState.InsecurePassword)
             {
-                Console.WriteLine("Passwort entspricht nicht den Anforderungen.");
+                return "PASSWORD NOT SECURE OR CONTAINING FORBIDDEN CHARACTERS";
             }
             else if (user.AuthState == AuthenticationState.LoggedIn)
             {
                 Console.WriteLine("Erfolgreich registriert und eingeloggt.");
                 _user.CopyProperties(user);
-                
-                return true;
+                return "REGISTRATION SUCCESSFUL";
             }
             else
             {
-                Console.WriteLine($"Das hat nicht geklappt. Status: {_user.AuthState}");
+                return $"REGISTRATION FAILED WITH STATUS: {_user.AuthState}";
             }
         }
     }

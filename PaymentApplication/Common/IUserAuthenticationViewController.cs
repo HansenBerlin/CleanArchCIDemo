@@ -1,8 +1,8 @@
 ﻿namespace PaymentApplication.Common;
 
-public interface IUserAuthenticationController
+public interface IUserAuthenticationViewController
 {
     Task<string> ValidateUsernameInput();
-    Task<bool> ValidateUserRegistrationInput(string username);
+    Task<string> ValidateUserRegistrationInput(string username);
     Task<string> ValidateLoginInput();
 }

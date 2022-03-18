@@ -6,5 +6,6 @@ public enum PaymentState
     InvalidFunds,
     UserNotFound,
     Pending,
-    DailyLimitReached
+    DailyLimitReached,
+    Failed
 }
