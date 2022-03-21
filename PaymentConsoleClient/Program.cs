@@ -1,8 +1,6 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using PaymentApplication.Common;
 using PaymentApplication.Controller;
-using PaymentApplication.ValueObjects;
 using PaymentConsoleClient.Controller;
 using PaymentConsoleClient.Interfaces;
 using PaymentCore.Entities;

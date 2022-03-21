@@ -3,9 +3,6 @@
 @using PaymentCore.Entities
 @using PaymentCore.Interfaces
 @using PaymentCore.UseCases
-@using PaymentWebClient.SessionService
-@inject ISessionService _sessionService
-@inject ISavingsAccountInteractor _savingsAccountInteractor;
 
 <PopupDialog @ref="@_dialog" Header="Deposit Info"/>
 <MudGrid>
@@ -23,24 +20,9 @@
         </EditForm>
     </MudItem>
     <MudItem sm="5">
-        @if (_sessionService.User.AuthState == AuthenticationState.LoggedIn)
+        @if (SessionService.User.AuthState == AuthenticationState.LoggedIn)
         {
             <SavingsAccountView @ref="_savingsAccountView"/>
         }
     </MudItem>
 </MudGrid>
-
-@code 
-{
-    private readonly IPayment _paymentModel = new PaymentEntity();
-    private PopupDialog _dialog;
-    private SavingsAccountView _savingsAccountView;
-
-    private async Task DepositFundsClick()
-    {
-        _paymentModel.ToAccountId = _sessionService.User.UserSavingsAccount.Id;
-        PaymentState state = await _savingsAccountInteractor.Deposit(_paymentModel);
-        await _savingsAccountView.UpdateData();
-        _dialog.Show($"Deposit processed with state: {state.ToString()}");
-    }
-}

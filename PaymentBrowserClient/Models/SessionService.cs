@@ -1,8 +1,7 @@
-﻿using PaymentCore.Emuns;
-using PaymentCore.Entities;
+﻿using PaymentCore.Entities;
 using PaymentCore.Interfaces;
 
-namespace PaymentWebClient.SessionService;
+namespace PaymentWebClient.Models;
 
 public class SessionService : ISessionService
 {

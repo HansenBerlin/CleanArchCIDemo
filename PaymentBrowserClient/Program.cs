@@ -5,7 +5,7 @@ using MudBlazor.Services;
 using PaymentApplication.Common;
 using PaymentApplication.Controller;
 using PaymentCore.UseCases;
-using PaymentWebClient.SessionService;
+using PaymentWebClient.Models;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");

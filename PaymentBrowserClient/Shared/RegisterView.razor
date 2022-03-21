@@ -23,12 +23,12 @@
 
 @code 
 {
+    [Parameter]
+    public EventCallback<RegisterAccountForm> OnClickCallback { get; set; }
     private readonly RegisterAccountForm _model = new();
 
-    public event EventHandler<RegisterAccountForm> RegisterUserEvent;
-
-    private void RegisterButtonClick()
+    private async Task RegisterButtonClick()
     {
-        RegisterUserEvent.Invoke(this, _model);
+        await OnClickCallback.InvokeAsync(_model);
     }
 }
