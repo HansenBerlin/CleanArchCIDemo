@@ -2,44 +2,45 @@
 @inject IUserAuthenticationInteractor _authentication;
 @inject ISessionService _sessionService;
 @using System.ComponentModel.DataAnnotations
+@using System.Diagnostics
 @using PaymentCore.Emuns
 @using PaymentCore.Entities
 @using PaymentCore.Interfaces
 @using PaymentCore.UseCases
 @using PaymentWebClient.SessionService
 
-<MudText>@user.Name</MudText>
-<MudText>@user.AuthState</MudText>
-<MudTabs Outlined="true">
-@if (user.AuthState != AuthenticationState.LoggedIn)
-{
+<MudText Align="Align.Center" Typo="Typo.h1" Style="margin-bottom: 25px">Payent App</MudText>
+
+<MudTabs Elevation="4" Rounded="true" Centered="true" Color="@Color.Primary" @ref="tabs">
+
+
     <MudTabPanel Text="Register" Icon="@Icons.Material.Filled.AccountCircle">
         <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
-                <DataAnnotationsValidator/>
-                <MudGrid>
-                    <MudItem md="12" sm="7">
-                        <MudCard>
-                            <MudCardContent>
-                                <MudTextField Label="Username" HelperText="Upper and lower case will be ignored"
-                                              @bind-Value="model.Username" For="@(() => model.Username)"/>
-                                <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
-                                              @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password"/>
-                                <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
-                                              @bind-Value="model.Password2" For="@(() => model.Password2)" InputType="InputType.Password"/>
-                            </MudCardContent>
-                            <MudCardActions>
-                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="RegisterButtonClick">Register</MudButton>
-                            </MudCardActions>
-                        </MudCard>
-                    </MudItem>
-                </MudGrid>
-            </EditForm>
+            <DataAnnotationsValidator/>
+            <MudGrid>
+                <MudItem md="12">
+                    <MudCard>
+                        <MudCardContent>
+                            <MudTextField Label="Username" HelperText="Upper and lower case will be ignored"
+                                          @bind-Value="model.Username" For="@(() => model.Username)"/>
+                            <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                                          @bind-Value="model.Password" For="@(() => model.Password)" InputType="InputType.Password"/>
+                            <MudTextField Label="Password" HelperText="Repeat the password" Class="mt-3"
+                                          @bind-Value="model.Password2" For="@(() => model.Password2)" InputType="InputType.Password"/>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="RegisterButtonClick">Register</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
     </MudTabPanel>
     <MudTabPanel Text="Login" Icon="@Icons.Material.Filled.Login">
         <EditForm Model="@model2" OnValidSubmit="OnValidSubmit2">
             <DataAnnotationsValidator/>
             <MudGrid>
-                <MudItem md="12" sm="7">
+                <MudItem md="12">
                     <MudCard>
                         <MudCardContent>
                             <MudTextField Label="Username" HelperText="Upper and lower case will be ignored"
@@ -55,15 +56,12 @@
             </MudGrid>
         </EditForm>
     </MudTabPanel>
-}
-
-    @if (user.AuthState == AuthenticationState.LoggedIn)
-    {
-        <MudTabPanel Text="Send Funds" Icon="@Icons.Material.Filled.Send">
-            <EditForm Model="@paymentModel" OnValidSubmit="OnValidSubmit3">
-                <DataAnnotationsValidator/>
-                <MudGrid>
-                    <MudItem md="12" sm="7">
+    <MudTabPanel Text="Send Funds" Icon="@Icons.Material.Filled.Send">
+        <MudPaper>
+            <MudGrid>
+                <MudItem sm="7">
+                    <EditForm Model="@paymentModel" OnValidSubmit="OnValidSubmit3">
+                        <DataAnnotationsValidator/>
                         <MudCard>
                             <MudCardContent>
                                 <MudNumericField @bind-Value="paymentModel.Amount" For="@(() => paymentModel.Amount)" Label="Amount to send" Format="F1" Variant="Variant.Text" Min="0" HideSpinButtons="true"/>
@@ -73,37 +71,102 @@
                                 <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="RegisterButtonClick">Send</MudButton>
                             </MudCardActions>
                         </MudCard>
-                    </MudItem>
-                </MudGrid>
-            </EditForm>
-        </MudTabPanel>
-        <MudTabPanel Text="Deposit Funds" Icon="@Icons.Material.Filled.Money">
-            <MudText>Content One</MudText>
-        </MudTabPanel>
-        <MudTabPanel Text="Logout" Icon="@Icons.Material.Filled.Logout">
-            <MudText>Content One</MudText>
-        </MudTabPanel>
-    }
-    
+                    </EditForm>
+                </MudItem>
+                <MudItem sm="5">
+                    @if (user.AuthState == AuthenticationState.LoggedIn)
+                    {
+                        <SavingsAccountView/>
+                    }
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    </MudTabPanel>
+    <MudTabPanel Text="Deposit Funds" Icon="@Icons.Material.Filled.Money">
+        <MudPaper>
+            <MudGrid>
+                <MudItem sm="7">
+                    <EditForm Model="@paymentModel" OnValidSubmit="OnValidSubmit3">
+                        <DataAnnotationsValidator/>
+                        <MudCard>
+                            <MudCardContent>
+                                <MudNumericField @bind-Value="paymentModel.Amount" For="@(() => paymentModel.Amount)" Label="Amount to deposit" Format="F1" Variant="Variant.Text" Min="0" HideSpinButtons="true"/>
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="RegisterButtonClick">Send</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </EditForm>
+                </MudItem>
+                <MudItem sm="5">
+                    @if (user.AuthState == AuthenticationState.LoggedIn)
+                    {
+                        <SavingsAccountView/>
+                    }
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+    </MudTabPanel>
+    <MudTabPanel Text="Logout" Icon="@Icons.Material.Filled.Logout">
+        <MudText>Content One</MudText>
+    </MudTabPanel>
+
+
 </MudTabs>
+<MudPaper Style="margin-top: 25px">
+    @if (user.AuthState == AuthenticationState.LoggedIn)
+    {
+        <MudChip Color="Color.Success">@user.AuthState as @user.Name</MudChip>
+    }
+    else
+    {
+        <MudChip Color="Color.Error">@user.AuthState</MudChip>
+    }
+</MudPaper>
 
-
-    
-
-    
 
 @code 
 {
-
+    MudTabs tabs;
     double? nullableDouble;
-
     private RegisterAccountForm model = new();
     private RegisterAccountForm model2 = new();
-    private IUser user = new UserEntity();
+    private IUser user;
     bool success;
     bool isLoggedIn = false;
 
     public IPayment paymentModel = new PaymentEntity();
+    
+    protected void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (user.AuthState == AuthenticationState.LoggedIn)
+            {
+                tabs.Panels[0].Disabled = true;    
+                tabs.Panels[1].Disabled = true;    
+                tabs.Panels[2].Disabled = false;    
+                tabs.Panels[3].Disabled = false;    
+                tabs.Panels[4].Disabled = false;
+                tabs.ActivatePanel(2);
+            }
+            else
+            {
+                tabs.Panels[0].Disabled = false;    
+                tabs.Panels[1].Disabled = false;    
+                tabs.Panels[2].Disabled = true;    
+                tabs.Panels[3].Disabled = true;    
+                tabs.Panels[4].Disabled = true;
+                tabs.ActivatePanel(0);
+            }
+        }
+    }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        user = _sessionService.User;
+        
+    }
 
     public class RegisterAccountForm
     {
@@ -145,7 +208,17 @@
         if (user.AuthState == AuthenticationState.LoggedIn)
         {
             _sessionService.UserName = model2.Username;
-            _sessionService.isLoggedIn = true;
+            tabs.Panels[0].Disabled = true;    
+            tabs.Panels[1].Disabled = true;    
+            tabs.Panels[2].Disabled = false;    
+            tabs.Panels[3].Disabled = false;    
+            tabs.Panels[4].Disabled = false;
+            tabs.ActivatePanel(2);
+        }
+        else
+        {
+            
+            Debug.WriteLine("test");
         }
         StateHasChanged();
     }
@@ -158,7 +231,17 @@
         if (user.AuthState == AuthenticationState.LoggedIn)
         {
             _sessionService.UserName = model.Username;
-            _sessionService.isLoggedIn = true;
+            tabs.Panels[0].Disabled = true;    
+            tabs.Panels[1].Disabled = true;    
+            tabs.Panels[2].Disabled = false;    
+            tabs.Panels[3].Disabled = false;    
+            tabs.Panels[4].Disabled = false;
+            tabs.ActivatePanel(2); 
+        }
+        else
+        {
+            
+            Debug.WriteLine("test");
         }
         StateHasChanged();
     }

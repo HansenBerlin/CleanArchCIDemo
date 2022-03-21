@@ -5,9 +5,9 @@ namespace PaymentCore.Entities;
 
 public class UserEntity : IUser
 {
-    public int Id { get; set; }
-    public string? Name { get; set; }
-    public string? PasswordHash { get; set; }
+    public int Id { get; set; } = -1;
+    public string Name { get; set; } = string.Empty; 
+    public string PasswordHash { get; set; }
     public IUserSavingsAccount UserSavingsAccount { get; set; } = new SavingsAccountEntity();
     public AuthenticationState AuthState { get; set; }
     

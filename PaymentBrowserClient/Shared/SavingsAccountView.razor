@@ -1,0 +1,33 @@
+﻿@using PaymentCore.UseCases
+@using PaymentWebClient.SessionService
+@using PaymentCore.Interfaces
+@inject ISavingsAccountInteractor _savingsAccountController
+@inject ISessionService _sessionService;
+
+<MudCard>
+    <MudCardHeader>
+        <CardHeaderContent>
+            <MudText Typo="Typo.h6">Details for Account #@_savingsAccount.Id</MudText>
+        </CardHeaderContent>
+        <CardHeaderActions>
+            <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
+        </CardHeaderActions>
+    </MudCardHeader>
+    <MudCardContent>
+        <MudText>Savings amount: @_savingsAccount.Savings</MudText>
+        <MudText>Max. negative allowed: @_savingsAccount.NegativeAllowed</MudText>
+        <MudText>Max. daily spending: @_savingsAccount.MaxSpendingPerDay</MudText>
+    </MudCardContent>
+</MudCard>
+
+@code 
+{
+    private IUserSavingsAccount _savingsAccount;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _savingsAccount = _sessionService.SavingsAccount;
+        var savingsAccount = await _savingsAccountController.GetUserAccount(_sessionService.UserName);
+        _savingsAccount.DeepCopy(savingsAccount);
+    }
+}

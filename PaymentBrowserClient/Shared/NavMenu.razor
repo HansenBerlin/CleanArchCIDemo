@@ -1,9 +1,10 @@
 ﻿@using PaymentWebClient.SessionService
+@using PaymentCore.Emuns
 @inject ISessionService _sessionService;
 
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ManageAccounts">User Account</MudNavLink>
-    @if (_sessionService.isLoggedIn)
+    @if (_sessionService.UserAuthState == AuthenticationState.LoggedIn)
     {
         <MudNavLink Href="/account" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Money">Savings Account</MudNavLink>
     }
