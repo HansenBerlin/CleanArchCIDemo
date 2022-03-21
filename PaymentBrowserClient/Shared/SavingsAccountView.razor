@@ -4,30 +4,33 @@
 @inject ISavingsAccountInteractor _savingsAccountController
 @inject ISessionService _sessionService;
 
-<MudCard>
+<MudCard Style="min-height: 300px; height: 300px">
     <MudCardHeader>
         <CardHeaderContent>
-            <MudText Typo="Typo.h6">Details for Account #@_savingsAccount.Id</MudText>
+            <MudText Typo="Typo.h6">Details for Account #@_sessionService.SavingsAccount.Id</MudText>
         </CardHeaderContent>
         <CardHeaderActions>
             <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Default" />
         </CardHeaderActions>
     </MudCardHeader>
     <MudCardContent>
-        <MudText>Savings amount: @_savingsAccount.Savings</MudText>
-        <MudText>Max. negative allowed: @_savingsAccount.NegativeAllowed</MudText>
-        <MudText>Max. daily spending: @_savingsAccount.MaxSpendingPerDay</MudText>
+        <MudText>Savings amount: @_sessionService.SavingsAccount.Savings</MudText>
+        <MudText>Max. negative allowed: @_sessionService.SavingsAccount.NegativeAllowed</MudText>
+        <MudText>Max. daily spending: @_sessionService.SavingsAccount.MaxSpendingPerDay</MudText>
     </MudCardContent>
 </MudCard>
 
 @code 
 {
-    private IUserSavingsAccount _savingsAccount;
-
+    public async Task UpdateData()
+    {
+        var savingsAccount = await _savingsAccountController.GetUserAccount(_sessionService.User.Name);
+        _sessionService.SavingsAccount.DeepCopy(savingsAccount);
+        StateHasChanged();  
+    }
+    
     protected override async Task OnInitializedAsync()
     {
-        _savingsAccount = _sessionService.SavingsAccount;
-        var savingsAccount = await _savingsAccountController.GetUserAccount(_sessionService.UserName);
-        _savingsAccount.DeepCopy(savingsAccount);
+        await UpdateData();
     }
 }

@@ -4,7 +4,7 @@
 
 <MudNavMenu>
     <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.ManageAccounts">User Account</MudNavLink>
-    @if (_sessionService.UserAuthState == AuthenticationState.LoggedIn)
+    @if (_sessionService.User.AuthState == AuthenticationState.LoggedIn)
     {
         <MudNavLink Href="/account" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Money">Savings Account</MudNavLink>
     }
