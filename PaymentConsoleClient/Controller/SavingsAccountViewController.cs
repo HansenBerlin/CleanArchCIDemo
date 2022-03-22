@@ -14,7 +14,7 @@ public class SavingsAccountViewController : ISavingsAccountViewController
     private readonly ISavingsAccountInteractor _interactor;
     private readonly IUserSavingsAccount _account;
     private readonly ISelectionValidation _validator;
-    private IUser _user;
+    private readonly IUser _user;
     public SavingsAccountViewController(ISavingsAccountInteractor interactor, IUser user, ISelectionValidation validator)
     {
         _interactor = interactor;
