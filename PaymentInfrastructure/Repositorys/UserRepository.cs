@@ -1,6 +1,7 @@
 ﻿using PaymentCore.Repositories;
 using PaymentInfrastructure.ServicesController;
 using MySql.Data.MySqlClient;
+using PaymentInfrastructure.Common;
 
 namespace PaymentInfrastructure.Repositorys;
 

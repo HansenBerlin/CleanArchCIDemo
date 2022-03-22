@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using PaymentInfrastructure.Common;
 
 namespace PaymentInfrastructure.ServicesController;
 
@@ -12,7 +13,3 @@ public class SqlService : ISqlService
     }
 }
 
-public interface ISqlService
-{
-    MySqlConnection con { get; }
-}

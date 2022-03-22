@@ -24,7 +24,6 @@ public class UserAuthenticationController : IUserAuthenticationInteractor
     {
         string url = $"{ApiStrings.NameCheck}/{username.ToLower()}";
         HttpResponseMessage response = await _requestController.GetAsync(url);
-        //HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.NameCheck}/{username.ToLower()}");
         bool isNameInUse = false;
         if (response.IsSuccessStatusCode)
         {
@@ -39,7 +38,6 @@ public class UserAuthenticationController : IUserAuthenticationInteractor
         string url = $"{ApiStrings.UserAuthenticate}/{username.ToLower()}/{password}";
         HttpResponseMessage response = await _requestController.GetAsync(url);
 
-        //HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.UserAuthenticate}/{username.ToLower()}/{password}");
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadAsAsync<UserEntity>();
@@ -83,7 +81,6 @@ public class UserAuthenticationController : IUserAuthenticationInteractor
         string url = $"{ApiStrings.UserLogout}/{userName}";
         HttpResponseMessage response = await _requestController.GetAsync(url);
 
-        //HttpResponseMessage response = await Client.GetAsync($"{RequestBaseUrl}/{ApiStrings.UserLogout}/{userName}");
         if (response.IsSuccessStatusCode)
         {
             return await response.Content.ReadAsAsync<AuthenticationState>();

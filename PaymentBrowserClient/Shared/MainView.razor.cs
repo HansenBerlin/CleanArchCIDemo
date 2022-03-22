@@ -10,18 +10,13 @@ namespace PaymentWebClient.Shared;
 
 public partial class MainView : ComponentBase
 {
-    [Inject] private IUserAuthenticationInteractor Authentication { get; set; }
-    [Inject] private ISessionService SessionService { get; set; }
+    [Inject] 
+    private IUserAuthenticationInteractor Authentication { get; set; }
+    [Inject] 
+    private ISessionService SessionService { get; set; }
     private MudTabs _tabs;
-    private LoginView _loginView = new();
-    private RegisterView _registerView;
-    private DepositFundsView _depositView;
-    private SendFundsView _sendFundsView;
     private bool isAuthenticated;
-    
-    //private IUser _user = new UserEntity();
-    
-    /*
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -30,30 +25,25 @@ public partial class MainView : ComponentBase
             UpdateTabVisibilityState();
             StateHasChanged();
         }
-    }*/
+    }
 
-    
     private void UpdateTabVisibilityState()
     {
         if (SessionService.User.AuthState == AuthenticationState.LoggedIn)
         {
             isAuthenticated = true;
-            //_tabs.ActivatePanel(2);
+            _tabs.ActivatePanel(2);
         }
         else
         {
             isAuthenticated = false;
-            //_tabs.ActivatePanel(0);
+            _tabs.ActivatePanel(0);
         }
     }
 
-
-    private async Task LoginButtonClick(RegisterAccountForm model)
+    private void LoginButtonClick(RegisterAccountForm model)
     {
-        var result = await Authentication.Authenticate(model.Username, model.Password);
-        SessionService.User.CopyProperties(result);
         UpdateTabVisibilityState();
-
         StateHasChanged();
     }
     
@@ -62,10 +52,8 @@ public partial class MainView : ComponentBase
         var result = await Authentication.Register(model.Password, model.Username);
         SessionService.User.CopyProperties(result);
         UpdateTabVisibilityState();
-
         StateHasChanged();
     }
-    
 
     private void Logout()
     {

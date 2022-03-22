@@ -1,14 +1,16 @@
 ﻿@using Microsoft.AspNetCore.Components
-@using PaymentWebClient.Models
- <EditForm Model="@_model">
+@using PaymentCore.Emuns
+
+<PopupDialog @ref="@_popup" Header="Login State"/>
+<EditForm Model="@_model">
      <DataAnnotationsValidator/>
      <MudGrid>
          <MudItem sm="12">
              <MudCard Style="min-height: 300px; height: 300px">
                  <MudCardContent>
-                     <MudTextField Label="Username" HelperText="Upper and lower case will be ignored"
+                     <MudTextField Label="Username" HelperText="Upper and lower case will be ignored during login"
                                    @bind-Value="_model.Username" For="@(() => _model.Username)"/>
-                     <MudTextField Label="Password" HelperText="Choose a strong password" Class="mt-3"
+                     <MudTextField Label="Password" HelperText="Type in your password" Class="mt-3"
                                    @bind-Value="_model.Password" For="@(() => _model.Password)" InputType="InputType.Password"/>
                  </MudCardContent>
                  <MudCardActions>
@@ -18,16 +20,3 @@
          </MudItem>
      </MudGrid>
  </EditForm>
- 
-@code 
-{
-    
-    [Parameter]
-    public EventCallback<RegisterAccountForm> OnClickCallback { get; set; }
-    private readonly RegisterAccountForm _model = new();
-
-    private async Task LoginButtonClick()
-    {
-        await OnClickCallback.InvokeAsync(_model);
-    }
-}
