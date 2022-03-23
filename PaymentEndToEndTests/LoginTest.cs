@@ -20,7 +20,7 @@ public class LoginTest
 
         var context = await browser.NewContextAsync();
         var page = await context.NewPageAsync();
-        await page.GotoAsync("https://localhost:5001/");
+        await page.GotoAsync("http://localhost:5001/");
         await page.Locator("input[type=\"text\"]").ClickAsync();
         await page.Locator("input[type=\"text\"]").FillAsync("robert2");
         await page.Locator("input[type=\"text\"]").PressAsync("Tab");

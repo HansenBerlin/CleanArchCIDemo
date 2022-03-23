@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\AuthServiceApi\PaymentApi\PaymentApi.csproj" />
+      <ProjectReference Include="..\PaymentApi\PaymentApi.csproj" />
     </ItemGroup>
 
 </Project>

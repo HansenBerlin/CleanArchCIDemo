@@ -1,56 +1,61 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentConsoleClient", "PaymentConsoleClient\PaymentConsoleClient.csproj", "{3E45E569-274A-483A-A1F0-03294F9EF47F}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32210.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentConsoleClient", "PaymentConsoleClient\PaymentConsoleClient.csproj", "{3E45E569-274A-483A-A1F0-03294F9EF47F}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {DC47A03C-C199-4E4A-94E8-178CE64FCC78}
 		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF} = {3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentWebClient.UiComponentTests", "PaymentWebClient.UiComponentTests\PaymentWebClient.UiComponentTests.csproj", "{4AD6F161-9438-4ED2-859B-5A7522563C17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentWebClient.UiComponentTests", "PaymentWebClient.UiComponentTests\PaymentWebClient.UiComponentTests.csproj", "{4AD6F161-9438-4ED2-859B-5A7522563C17}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C91F6102-FAE5-474A-A29D-0AA5435B6F9A} = {C91F6102-FAE5-474A-A29D-0AA5435B6F9A}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentCore", "PaymentCore\PaymentCore.csproj", "{DC47A03C-C199-4E4A-94E8-178CE64FCC78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentCore", "PaymentCore\PaymentCore.csproj", "{DC47A03C-C199-4E4A-94E8-178CE64FCC78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentApplication", "PaymentApplication\PaymentApplication.csproj", "{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentApplication", "PaymentApplication\PaymentApplication.csproj", "{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {DC47A03C-C199-4E4A-94E8-178CE64FCC78}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentApi", "..\AuthServiceApi\PaymentApi\PaymentApi.csproj", "{ED65E7F9-A7A0-44E6-BA92-B88FAA23E3E5}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {DC47A03C-C199-4E4A-94E8-178CE64FCC78}
-		{0CF0F26F-3CB3-445C-8B52-AD8FA25A6136} = {0CF0F26F-3CB3-445C-8B52-AD8FA25A6136}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentInfrastructure", "PaymentInfrastructure\PaymentInfrastructure.csproj", "{0CF0F26F-3CB3-445C-8B52-AD8FA25A6136}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentInfrastructure", "PaymentInfrastructure\PaymentInfrastructure.csproj", "{0CF0F26F-3CB3-445C-8B52-AD8FA25A6136}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {DC47A03C-C199-4E4A-94E8-178CE64FCC78}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D7B8CC64-A222-4AFE-98CA-5705DC470F55}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E4EE33F0-0878-4F91-B0B4-07E23C1C04DA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{E4EE33F0-0878-4F91-B0B4-07E23C1C04DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentWebClient", "PaymentBrowserClient\PaymentWebClient.csproj", "{C91F6102-FAE5-474A-A29D-0AA5435B6F9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentWebClient", "PaymentBrowserClient\PaymentWebClient.csproj", "{C91F6102-FAE5-474A-A29D-0AA5435B6F9A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF} = {3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}
 		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {DC47A03C-C199-4E4A-94E8-178CE64FCC78}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentApi.UnitTests", "PaymentApi.UnitTests\PaymentApi.UnitTests.csproj", "{20FBE9DD-0B30-4277-9261-AC15C11EC9D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentApi.UnitTests", "PaymentApi.UnitTests\PaymentApi.UnitTests.csproj", "{20FBE9DD-0B30-4277-9261-AC15C11EC9D7}"
 	ProjectSection(ProjectDependencies) = postProject
-		{ED65E7F9-A7A0-44E6-BA92-B88FAA23E3E5} = {ED65E7F9-A7A0-44E6-BA92-B88FAA23E3E5}
+		{F4916087-C9F4-4608-B86C-1DDAD1AE35A9} = {F4916087-C9F4-4608-B86C-1DDAD1AE35A9}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentConsoleClient.UnitTests", "PaymentConsoleClient.UnitTests\PaymentConsoleClient.UnitTests.csproj", "{DF8C4182-D17F-497B-A0DF-9CA560BA7850}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentConsoleClient.UnitTests", "PaymentConsoleClient.UnitTests\PaymentConsoleClient.UnitTests.csproj", "{DF8C4182-D17F-497B-A0DF-9CA560BA7850}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3E45E569-274A-483A-A1F0-03294F9EF47F} = {3E45E569-274A-483A-A1F0-03294F9EF47F}
 		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF} = {3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentEndToEndTests", "PaymentEndToEndTests\PaymentEndToEndTests.csproj", "{C9C19019-EB55-413E-A816-D3D06102D6AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentEndToEndTests", "PaymentEndToEndTests\PaymentEndToEndTests.csproj", "{C9C19019-EB55-413E-A816-D3D06102D6AF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentApi", "PaymentApi\PaymentApi.csproj", "{F4916087-C9F4-4608-B86C-1DDAD1AE35A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {DC47A03C-C199-4E4A-94E8-178CE64FCC78}
+		{0CF0F26F-3CB3-445C-8B52-AD8FA25A6136} = {0CF0F26F-3CB3-445C-8B52-AD8FA25A6136}
+	EndProjectSection
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81C38906-BA88-4830-931F-AA6A9C6BECC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,10 +79,6 @@ Global
 		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED65E7F9-A7A0-44E6-BA92-B88FAA23E3E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED65E7F9-A7A0-44E6-BA92-B88FAA23E3E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED65E7F9-A7A0-44E6-BA92-B88FAA23E3E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED65E7F9-A7A0-44E6-BA92-B88FAA23E3E5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0CF0F26F-3CB3-445C-8B52-AD8FA25A6136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0CF0F26F-3CB3-445C-8B52-AD8FA25A6136}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CF0F26F-3CB3-445C-8B52-AD8FA25A6136}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -98,17 +99,21 @@ Global
 		{C9C19019-EB55-413E-A816-D3D06102D6AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9C19019-EB55-413E-A816-D3D06102D6AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9C19019-EB55-413E-A816-D3D06102D6AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4916087-C9F4-4608-B86C-1DDAD1AE35A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4916087-C9F4-4608-B86C-1DDAD1AE35A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4916087-C9F4-4608-B86C-1DDAD1AE35A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4916087-C9F4-4608-B86C-1DDAD1AE35A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81C38906-BA88-4830-931F-AA6A9C6BECC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81C38906-BA88-4830-931F-AA6A9C6BECC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81C38906-BA88-4830-931F-AA6A9C6BECC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81C38906-BA88-4830-931F-AA6A9C6BECC7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4AD6F161-9438-4ED2-859B-5A7522563C17} = {D7B8CC64-A222-4AFE-98CA-5705DC470F55}
-		{ED65E7F9-A7A0-44E6-BA92-B88FAA23E3E5} = {E4EE33F0-0878-4F91-B0B4-07E23C1C04DA}
-		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF} = {E4EE33F0-0878-4F91-B0B4-07E23C1C04DA}
-		{3E45E569-274A-483A-A1F0-03294F9EF47F} = {E4EE33F0-0878-4F91-B0B4-07E23C1C04DA}
-		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {E4EE33F0-0878-4F91-B0B4-07E23C1C04DA}
-		{0CF0F26F-3CB3-445C-8B52-AD8FA25A6136} = {E4EE33F0-0878-4F91-B0B4-07E23C1C04DA}
-		{C91F6102-FAE5-474A-A29D-0AA5435B6F9A} = {E4EE33F0-0878-4F91-B0B4-07E23C1C04DA}
-		{20FBE9DD-0B30-4277-9261-AC15C11EC9D7} = {D7B8CC64-A222-4AFE-98CA-5705DC470F55}
-		{DF8C4182-D17F-497B-A0DF-9CA560BA7850} = {D7B8CC64-A222-4AFE-98CA-5705DC470F55}
-		{C9C19019-EB55-413E-A816-D3D06102D6AF} = {D7B8CC64-A222-4AFE-98CA-5705DC470F55}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {371E17F1-E321-4367-BE7C-888EA8B4D961}
 	EndGlobalSection
 EndGlobal
