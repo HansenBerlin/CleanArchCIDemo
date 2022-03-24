@@ -26,10 +26,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentInfrastructure", "Pa
 		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {DC47A03C-C199-4E4A-94E8-178CE64FCC78}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D7B8CC64-A222-4AFE-98CA-5705DC470F55}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{E4EE33F0-0878-4F91-B0B4-07E23C1C04DA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentWebClient", "PaymentBrowserClient\PaymentWebClient.csproj", "{C91F6102-FAE5-474A-A29D-0AA5435B6F9A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF} = {3E4C5A00-F7E8-4B9E-B30D-5FB87ABCC3FF}
@@ -54,8 +50,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentApi", "PaymentApi\Pa
 		{DC47A03C-C199-4E4A-94E8-178CE64FCC78} = {DC47A03C-C199-4E4A-94E8-178CE64FCC78}
 		{0CF0F26F-3CB3-445C-8B52-AD8FA25A6136} = {0CF0F26F-3CB3-445C-8B52-AD8FA25A6136}
 	EndProjectSection
-EndProject
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{81C38906-BA88-4830-931F-AA6A9C6BECC7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,10 +97,6 @@ Global
 		{F4916087-C9F4-4608-B86C-1DDAD1AE35A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4916087-C9F4-4608-B86C-1DDAD1AE35A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4916087-C9F4-4608-B86C-1DDAD1AE35A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81C38906-BA88-4830-931F-AA6A9C6BECC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81C38906-BA88-4830-931F-AA6A9C6BECC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81C38906-BA88-4830-931F-AA6A9C6BECC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81C38906-BA88-4830-931F-AA6A9C6BECC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
